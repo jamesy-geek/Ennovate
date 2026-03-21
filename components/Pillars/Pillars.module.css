@@ -1,0 +1,143 @@
+.pillars {
+  position: relative;
+  z-index: 1;
+}
+
+.pillar {
+  display: flex;
+  align-items: stretch;
+  min-height: 260px;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease;
+  background: var(--black);
+  color: var(--white);
+}
+
+.pillar:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.whiteBand {
+  background: var(--white);
+  color: var(--black);
+}
+
+.pillarNumber {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--dim);
+  padding: 44px 40px;
+  min-width: 110px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+}
+
+.whiteBand .pillarNumber {
+  color: rgba(0, 0, 0, 0.35);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pillarContent {
+  flex: 1;
+  padding: 44px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pillarCategory {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 14px;
+}
+
+.whiteBand .pillarCategory {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.pillarTitle {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(48px, 7vw, 92px);
+  line-height: 0.9;
+  letter-spacing: -1px;
+  margin-bottom: 18px;
+}
+
+.pillarDesc {
+  font-size: 15px;
+  color: var(--dim);
+  max-width: 460px;
+  line-height: 1.75;
+}
+
+.whiteBand .pillarDesc {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.pillarTags {
+  margin-top: auto;
+  padding-top: 28px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  color: var(--dim);
+}
+
+.whiteBand .tag {
+  border-color: rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.pillarLine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--white);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillar:hover .pillarLine {
+  transform: scaleY(1);
+}
+
+.whiteBand .pillarLine {
+  background: var(--black);
+}
+
+@media (max-width: 768px) {
+  .pillar {
+    flex-direction: column;
+    min-height: unset;
+  }
+  .pillarNumber {
+    min-width: unset;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px;
+  }
+  .whiteBand .pillarNumber {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .pillarContent {
+    padding: 28px 20px;
+  }
+}

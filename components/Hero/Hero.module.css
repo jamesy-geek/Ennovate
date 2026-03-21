@@ -1,0 +1,177 @@
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 40px 80px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.ghost {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-55%);
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(160px, 28vw, 400px);
+  line-height: 0.85;
+  color: rgba(255, 255, 255, 0.03);
+  letter-spacing: -10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.eyeWrap {
+  position: absolute;
+  right: clamp(40px, 8vw, 120px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.title {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(72px, 13vw, 180px);
+  line-height: 0.88;
+  letter-spacing: -2px;
+  margin-bottom: 28px;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+}
+
+.line span {
+  display: block;
+}
+
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--white);
+}
+
+.sub {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 36px;
+  max-width: 380px;
+  line-height: 1.9;
+}
+
+.ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 13px 24px;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.btnOutline {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--white);
+}
+
+.btnOutline:hover {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btnFilled {
+  background: var(--white);
+  color: var(--black);
+}
+
+.btnFilled:hover {
+  background: rgba(244, 244, 239, 0.85);
+}
+
+.scroll {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--dim);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 40px;
+  background: var(--dim);
+  animation: lineGrowHero 1.5s ease infinite 2s;
+}
+
+@keyframes lineGrowHero {
+  0%, 100% { opacity: 0.3; height: 40px; }
+  50% { opacity: 1; height: 60px; }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 0 20px 72px;
+    justify-content: center;
+    padding-top: 100px;
+  }
+  .ghost { display: none; }
+  .eyeWrap {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-bottom: 36px;
+    align-self: flex-start;
+  }
+  .scroll { right: 20px; }
+  .title { font-size: clamp(64px, 18vw, 100px); }
+  .sub { font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .title { font-size: 58px; }
+  .btn { padding: 11px 18px; font-size: 9px; }
+}

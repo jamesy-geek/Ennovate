@@ -1,0 +1,176 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.container {
+  width: clamp(160px, 22vw, 300px);
+  height: clamp(160px, 22vw, 300px);
+  position: relative;
+}
+
+/* Layer 1: Rings */
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+.ring:nth-child(2) {
+  inset: 12%;
+  animation-delay: 0.4s;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.ring:nth-child(3) {
+  inset: 24%;
+  animation-delay: 0.8s;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+@keyframes ringPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* Layer 2: Crosshair */
+.crosshair {
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  animation: rotateReverse 12s linear infinite;
+}
+
+@keyframes rotateReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Layer 3: Ticks */
+.ticks {
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  animation: rotateForward 20s linear infinite;
+}
+
+.ticks::before, .ticks::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  transform-origin: bottom center;
+  transform: translateX(-50%);
+}
+
+.ticks::after {
+  transform: translateX(-50%) rotate(90deg);
+}
+
+@keyframes rotateForward {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Layer 4: Iris */
+.iris {
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 60%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+/* Layer 5: Scanline */
+.scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 48%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.06) 52%,
+    transparent 100%
+  );
+  animation: scanLine 3s linear infinite;
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Layer 6: Pupil */
+.pupil {
+  position: absolute;
+  width: 36%;
+  height: 36%;
+  background: var(--white);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pupilMove 8s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes pupilMove {
+  0%   { transform: translate(-50%, -50%); }
+  15%  { transform: translate(-20%, -50%); }
+  30%  { transform: translate(-20%, -20%); }
+  45%  { transform: translate(-50%, -20%); }
+  60%  { transform: translate(-80%, -50%); }
+  75%  { transform: translate(-50%, -80%); }
+  90%  { transform: translate(-80%, -80%); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+/* Layer 7: Blink */
+.blink {
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  background: var(--black);
+  transform: scaleY(0);
+  animation: blink 7s ease-in-out infinite 3s;
+}
+
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(0); }
+  93%, 97%      { transform: scaleY(1); }
+}
+
+.label {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 120px;
+    height: 120px;
+  }
+  .label {
+    font-size: 7px;
+  }
+}
