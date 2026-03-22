@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./Hero.module.css";
 import RobotEye from "@/components/RobotEye/RobotEye";
+import MagneticButton from "@/components/MagneticButton/MagneticButton";
 
 export default function Hero() {
   const [text, setText] = useState("");
@@ -26,10 +27,7 @@ export default function Hero() {
       {/* Ghost Watermark */}
       <div className={styles.ghost}>03</div>
 
-      {/* Robot Eye */}
-      <div className={styles.eyeWrap}>
-        <RobotEye />
-      </div>
+
 
       {/* Hero Content */}
       <div className={styles.content}>
@@ -85,9 +83,11 @@ export default function Hero() {
           <Link href="#about" className={`${styles.btn} ${styles.btnOutline}`}>
             [ What We Do ]
           </Link>
-          <Link href="/join" className={`${styles.btn} ${styles.btnFilled}`}>
-            [ Join the Club ]
-          </Link>
+          <MagneticButton>
+            <Link href="/join" className={`${styles.btn} ${styles.btnFilled}`}>
+              [ Join the Club ]
+            </Link>
+          </MagneticButton>
         </motion.div>
       </div>
 

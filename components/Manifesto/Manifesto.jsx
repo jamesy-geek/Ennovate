@@ -1,11 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./Manifesto.module.css";
 
 export default function Manifesto() {
+  const quoteRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: quoteRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Map scroll progress to font weight: 400 → 700
+  const fontWeight = useTransform(scrollYProgress, [0, 0.5], [400, 700]);
+
   return (
-    <section className={styles.manifesto}>
+    <section className={styles.manifesto} ref={quoteRef}>
       <motion.div
         className={styles.quoteWrapper}
         initial={{ opacity: 0, x: -30 }}
@@ -13,10 +23,13 @@ export default function Manifesto() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className={styles.quote}>
+        <motion.div
+          className={styles.quote}
+          style={{ fontWeight }}
+        >
           "We don't wait for the future.<br />
           We <span className={styles.outline}>build</span> the damn thing."
-        </div>
+        </motion.div>
         <p className={styles.author}>// Club Ennovate · 2022–present</p>
       </motion.div>
 

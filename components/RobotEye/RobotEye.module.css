@@ -147,13 +147,13 @@
   inset: 32%;
   border-radius: 50%;
   background: var(--black);
-  transform: scaleY(0);
   animation: blink 7s ease-in-out infinite 3s;
+  clip-path: inset(50% 0 50% 0);
 }
 
 @keyframes blink {
-  0%, 90%, 100% { transform: scaleY(0); }
-  93%, 97%      { transform: scaleY(1); }
+  0%, 95%, 100% { clip-path: inset(50% 0 50% 0); }
+  97%, 98%      { clip-path: inset(0% 0 0% 0); }
 }
 
 .label {

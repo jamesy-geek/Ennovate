@@ -8,47 +8,15 @@ const challenges = [
     id: 1,
     featured: true,
     status: "Active Build",
-    name: "TEKNOFEST 2026 — Humanoid Robot Competition",
-    desc: "Our flagship entry: a full-scale InMoov-based humanoid with custom inverse kinematics, AI face recognition, and real-time conversation. Nine-person team. Fabricated entirely in-house.",
-    tags: ["Robotics", "AI", "Fabrication", "InMoov"],
+    name: "TechTatva 2026 — Flagship Competition",
+    desc: "Our flagship entry: a high-performance robot designed for the annual TechTatva competition. Judged on speed, efficiency, and real-world application.",
+    tags: ["Robotics", "AI", "Fabrication"],
     meta: [
-      { key: "Competition", val: "TEKNOFEST 2026" },
-      { key: "Category", val: "Humanoid Robotics" },
+      { key: "Competition", val: "TechTatva 2026" },
+      { key: "Category", val: "Flagship Robotics" },
       { key: "Status", val: "In Progress" },
     ],
-    progress: 65, // Addition D
-  },
-  {
-    id: 2,
-    status: "Upcoming",
-    name: "Smart India Hackathon",
-    desc: "National-level 36-hour hackathon targeting government problem statements in infrastructure and public service.",
-    tags: ["Software", "Hackathon"],
-    meta: [
-      { key: "Format", val: "36 Hours" },
-      { key: "Status", val: "Preparing" },
-    ],
-  },
-  {
-    id: 3,
-    status: "Upcoming",
-    name: "Internal Build Sprint",
-    desc: "Club-internal 48-hour build challenge. Any tech, any problem. Judged on novelty and execution.",
-    tags: ["Open", "Hardware + Software"],
-    meta: [
-      { key: "Format", val: "48 Hours" },
-      { key: "Open to", val: "All Members" },
-    ],
-  },
-  {
-    id: 4,
-    status: "Scouting",
-    name: "Line Follower & Robowar",
-    desc: "Classic robotics competitions to sharpen embedded systems and control theory skills at inter-college fests.",
-    tags: ["Embedded", "Control Systems"],
-    meta: [
-      { key: "Category", val: "Competitive Robotics" },
-    ],
+    progress: 65,
   },
 ];
 

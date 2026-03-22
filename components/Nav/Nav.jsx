@@ -24,7 +24,7 @@ export default function Nav() {
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <Link href="/" className={styles.logo}>
           <Image
-            src="/assets/logo.png"
+            src="/assets/ennovate-logo.png"
             alt="Ennovate Logo"
             width={120}
             height={32}

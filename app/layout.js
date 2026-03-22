@@ -3,6 +3,7 @@ import "./globals.css";
 import Nav from "@/components/Nav/Nav";
 import Cursor from "@/components/Cursor/Cursor";
 
+
 const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],

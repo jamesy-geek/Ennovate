@@ -6,8 +6,8 @@ import styles from "./Stats.module.css";
 
 const stats = [
   { label: "Years Active", target: 3, suffix: "+" },
-  { label: "Members", target: 40, suffix: "+" },
-  { label: "Projects Shipped", target: 20, suffix: "+" },
+  { label: "Members", target: 20, suffix: "+" },
+  { label: "Projects Shipped", target: 10, suffix: "+" },
   { label: "Ideas Left", target: null, value: "∞" },
 ];
 
