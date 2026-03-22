@@ -167,8 +167,8 @@
 
 @media (max-width: 768px) {
   .container {
-    width: 120px;
-    height: 120px;
+    width: 220px;
+    height: 220px;
   }
   .label {
     font-size: 7px;

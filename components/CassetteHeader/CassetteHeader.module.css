@@ -18,7 +18,7 @@
   background-image: var(--grain-url);
   background-size: 200px 200px;
   background-repeat: repeat;
-  opacity: 0.08;
+  opacity: 0.05;
   pointer-events: none;
   z-index: 10;
   animation: grainShift 0.08s steps(1) infinite;
@@ -130,10 +130,10 @@
     display: none;
   }
   .eyeFallback {
-    transform: scale(1);
+    transform: scale(1.3);
   }
   .header::after {
-    opacity: 0.06;
+    opacity: 0.03;
   }
   .footerStrip {
     padding: 10px 20px;

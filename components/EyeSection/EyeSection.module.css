@@ -12,8 +12,8 @@
 }
 
 .eyeContainer {
-  width: clamp(200px, 30vw, 400px);
-  height: clamp(200px, 30vw, 400px);
+  width: clamp(280px, 35vw, 400px);
+  height: clamp(280px, 35vw, 400px);
   position: relative;
   display: flex;
   justify-content: center;
@@ -49,6 +49,46 @@
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
   /* Use framer-motion for smooth tracking */
+}
+
+/* Shutter overlay — camera aperture effect */
+.shutter {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.blade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  animation: shutterClose 10s ease-in-out infinite;
+}
+
+/* Each blade is a triangular wedge rotated into position */
+.blade:nth-child(1) { clip-path: polygon(50% 50%, 25% 0%, 75% 0%); animation-delay: 0s; }
+.blade:nth-child(2) { clip-path: polygon(50% 50%, 75% 0%, 100% 33%); animation-delay: 0.03s; }
+.blade:nth-child(3) { clip-path: polygon(50% 50%, 100% 33%, 100% 75%); animation-delay: 0.06s; }
+.blade:nth-child(4) { clip-path: polygon(50% 50%, 100% 75%, 50% 100%); animation-delay: 0.09s; }
+.blade:nth-child(5) { clip-path: polygon(50% 50%, 50% 100%, 0% 75%); animation-delay: 0.06s; }
+.blade:nth-child(6) { clip-path: polygon(50% 50%, 0% 75%, 0% 25%); animation-delay: 0.03s; }
+.blade:nth-child(7) { clip-path: polygon(50% 50%, 0% 25%, 25% 0%); animation-delay: 0s; }
+
+@keyframes shutterClose {
+  0%, 88%, 100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  92%, 96% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 
 .label {

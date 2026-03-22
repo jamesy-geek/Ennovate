@@ -65,6 +65,16 @@ export default function EyeSection() {
             className={styles.pupil} 
             style={{ x: pupilX, y: pupilY }}
           ></motion.div>
+          {/* Camera shutter overlay */}
+          <div className={styles.shutter}>
+            <div className={styles.blade}></div>
+            <div className={styles.blade}></div>
+            <div className={styles.blade}></div>
+            <div className={styles.blade}></div>
+            <div className={styles.blade}></div>
+            <div className={styles.blade}></div>
+            <div className={styles.blade}></div>
+          </div>
         </div>
         <span className={styles.label}>[ INTERACTIVE_EYE_04 ]</span>
       </div>
