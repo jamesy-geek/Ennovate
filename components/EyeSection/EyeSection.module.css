@@ -68,36 +68,69 @@
   background: var(--black);
   transform-origin: 50% 50%;
   opacity: 0;
-  animation: shutterClose 10s ease-in-out infinite;
+  animation: shutterClose 8s steps(1) infinite;
 }
 
 /* Each blade is a triangular wedge rotated into position */
 .blade:nth-child(1) { clip-path: polygon(50% 50%, 25% 0%, 75% 0%); animation-delay: 0s; }
-.blade:nth-child(2) { clip-path: polygon(50% 50%, 75% 0%, 100% 33%); animation-delay: 0.03s; }
-.blade:nth-child(3) { clip-path: polygon(50% 50%, 100% 33%, 100% 75%); animation-delay: 0.06s; }
-.blade:nth-child(4) { clip-path: polygon(50% 50%, 100% 75%, 50% 100%); animation-delay: 0.09s; }
-.blade:nth-child(5) { clip-path: polygon(50% 50%, 50% 100%, 0% 75%); animation-delay: 0.06s; }
-.blade:nth-child(6) { clip-path: polygon(50% 50%, 0% 75%, 0% 25%); animation-delay: 0.03s; }
+.blade:nth-child(2) { clip-path: polygon(50% 50%, 75% 0%, 100% 33%); animation-delay: 0s; }
+.blade:nth-child(3) { clip-path: polygon(50% 50%, 100% 33%, 100% 75%); animation-delay: 0s; }
+.blade:nth-child(4) { clip-path: polygon(50% 50%, 100% 75%, 50% 100%); animation-delay: 0s; }
+.blade:nth-child(5) { clip-path: polygon(50% 50%, 50% 100%, 0% 75%); animation-delay: 0s; }
+.blade:nth-child(6) { clip-path: polygon(50% 50%, 0% 75%, 0% 25%); animation-delay: 0s; }
 .blade:nth-child(7) { clip-path: polygon(50% 50%, 0% 25%, 25% 0%); animation-delay: 0s; }
 
 @keyframes shutterClose {
-  0%, 88%, 100% {
+  0%, 93%, 97%, 100% {
     opacity: 0;
-    transform: scale(0.3);
+    transform: scale(0);
   }
-  92%, 96% {
+  93.01%, 96.99% {
     opacity: 1;
     transform: scale(1.15);
   }
 }
 
-.label {
+.labelContainer {
   position: absolute;
   bottom: -40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.label {
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 10px;
   letter-spacing: 4px;
   color: var(--dim);
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.metaTag {
+  position: absolute;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  color: var(--white);
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+/* Trigged via JS */
+.blinkActive .blade {
+  animation: manualBlink 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes manualBlink {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  45%, 55% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (max-width: 768px) {
+  .eyeContainer {
+    width: 300px;
+    height: 300px;
+  }
 }

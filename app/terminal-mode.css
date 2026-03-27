@@ -1,0 +1,103 @@
+/* TERMINAL MODE GLOBAL OVERRIDES */
+:global(html.terminal-mode) {
+  --bg: #020c02;
+  --g: #00ff41;
+  --mg: #00cc33;
+  --dg: #003b00;
+
+  /* Force monospace everywhere */
+  --font-bebas-neue: 'Share Tech Mono', monospace !important;
+  --font-barlow: 'Share Tech Mono', monospace !important;
+}
+
+:global(html.terminal-mode) body {
+  background-color: var(--bg) !important;
+  color: var(--g) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+}
+
+/* CRT SCANLINES */
+:global(html.terminal-mode) body::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  ) !important;
+  background-size: 100% 4px !important;
+  pointer-events: none !important;
+  z-index: 900 !important;
+  animation: none !important; /* Disable original grid animation */
+}
+
+/* CRT VIGNETTE */
+:global(html.terminal-mode) body::after {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background: radial-gradient(
+    circle at center,
+    transparent 30%,
+    rgba(0, 0, 0, 0.7) 100%
+  ) !important;
+  pointer-events: none !important;
+  z-index: 901 !important;
+  opacity: 1 !important;
+}
+
+/* GLOBAL TEXT GLOW */
+:global(html.terminal-mode) h1,
+:global(html.terminal-mode) h2,
+:global(html.terminal-mode) h3,
+:global(html.terminal-mode) .glow {
+  text-shadow: 0 0 8px #00ff41, 0 0 16px #00ff41, 0 0 24px rgba(0, 255, 65, 0.2) !important;
+}
+
+/* ALL LINKS & BUTTONS */
+:global(html.terminal-mode) a,
+:global(html.terminal-mode) button {
+  color: var(--g) !important;
+  text-transform: uppercase !important;
+}
+
+/* TYPEWRITER CURSOR BLINK */
+@keyframes terminalBlink {
+  50% { opacity: 0; }
+}
+
+:global(html.terminal-mode) .cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.2em;
+  background: var(--g);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: terminalBlink 1s step-end infinite;
+}
+
+/* GLITCH ANIMATION */
+@keyframes terminalGlitch {
+  0%, 94%, 100% { transform: translate(0); filter: none; }
+  95% { transform: translate(-2px, 1px); filter: hue-rotate(90deg) brightness(1.5); }
+  96% { transform: translate(2px, -1px); filter: hue-rotate(-90deg) brightness(1.2); }
+  97% { transform: translate(-1px, 2px); filter: hue-rotate(45deg); }
+  98% { transform: translate(1px, -2px); filter: saturate(2); }
+}
+
+:global(html.terminal-mode) .glitch {
+  animation: terminalGlitch 8s infinite;
+}
+
+/* RADAR ANIMATIONS */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blipFade {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+}

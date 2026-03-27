@@ -1,12 +1,25 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import styles from "./EyeSection.module.css";
 
 export default function EyeSection() {
   const containerRef = useRef(null);
-  const [isTouch, setIsTouch] = useState(false);
+  const timerRef = useRef(null);
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [lastInteraction, setLastInteraction] = useState(0);
+  const [showMetadata, setShowMetadata] = useState(false);
+
+  const handlePointerDown = () => {
+    timerRef.current = setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("trigger-egg", { detail: { eggId: "BLUEPRINT" } }));
+    }, 3000);
+  };
+
+  const handlePointerUp = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  };
 
   // Motion values for smooth tracking
   const mouseX = useMotionValue(0);
@@ -17,66 +30,98 @@ export default function EyeSection() {
   const pupilX = useSpring(mouseX, springConfig);
   const pupilY = useSpring(mouseY, springConfig);
 
-  useEffect(() => {
-    setIsTouch("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  const handlePointerInteraction = (e) => {
+    if (!containerRef.current) return;
 
-    const handleMouseMove = (e) => {
-      if (isTouch) return;
-      if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+    const dx = e.clientX - centerX;
+    const dy = e.clientY - centerY;
+    const angle = Math.atan2(dy, dx);
+    const distance = Math.min(Math.sqrt(dx * dx + dy * dy), rect.width * 0.08);
 
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
-      const angle = Math.atan2(dy, dx);
-      // Even smaller radius for maximum subtlety
-      const distance = Math.min(Math.sqrt(dx * dx + dy * dy), rect.width * 0.06);
-
-      mouseX.set(Math.cos(angle) * distance);
-      mouseY.set(Math.sin(angle) * distance);
-    };
-
-    if (!isTouch) {
-      window.addEventListener("mousemove", handleMouseMove);
-    } else {
-      // Gentle random drift on touch
-      const interval = setInterval(() => {
-        const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * 10;
-        mouseX.set(Math.cos(angle) * distance);
-        mouseY.set(Math.sin(angle) * distance);
-      }, 3000);
-      return () => clearInterval(interval);
+    mouseX.set(Math.cos(angle) * distance);
+    mouseY.set(Math.sin(angle) * distance);
+    
+    // Auto-blink occasionally during interaction
+    if (Date.now() - lastInteraction > 2000 && Math.random() > 0.95) {
+      triggerBlink();
     }
+    setLastInteraction(Date.now());
+  };
 
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isTouch, mouseX, mouseY]);
+  const triggerBlink = () => {
+    if (isBlinking) return;
+    setIsBlinking(true);
+    setShowMetadata(true);
+    setTimeout(() => {
+      setIsBlinking(false);
+      // Keep metadata a bit longer
+      setTimeout(() => setShowMetadata(false), 1200);
+    }, 200);
+  };
 
   return (
-    <section className={styles.eyeSection}>
-      <div className={styles.eyeContainer} ref={containerRef}>
+    <section 
+      className={styles.eyeSection}
+      onPointerMove={handlePointerInteraction}
+    >
+      <div 
+        className={`${styles.eyeContainer} ${isBlinking ? styles.blinkActive : ""}`} 
+        ref={containerRef}
+        onClick={triggerBlink}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+      >
         <div className={styles.ring}></div>
         <div className={styles.ring}></div>
         <div className={styles.ring}></div>
+        
         <div className={styles.iris}>
           <motion.div 
             className={styles.pupil} 
             style={{ x: pupilX, y: pupilY }}
           ></motion.div>
-          {/* Camera shutter overlay */}
+          
+          {/* Shutter overlay */}
           <div className={styles.shutter}>
-            <div className={styles.blade}></div>
-            <div className={styles.blade}></div>
-            <div className={styles.blade}></div>
-            <div className={styles.blade}></div>
-            <div className={styles.blade}></div>
-            <div className={styles.blade}></div>
-            <div className={styles.blade}></div>
+            {[...Array(7)].map((_, i) => (
+              <div key={i} className={styles.blade}></div>
+            ))}
           </div>
         </div>
-        <span className={styles.label}>[ INTERACTIVE_EYE_04 ]</span>
+
+        <div className={styles.labelContainer}>
+          <span className={styles.label}>[ INTERACTIVE_EYE_04 ]</span>
+          
+          <AnimatePresence>
+            {showMetadata && (
+              <>
+                <motion.span 
+                  className={styles.metaTag}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  style={{ top: '10%', right: '-40%' }}
+                >
+                  // COORD_VALIDATED
+                </motion.span>
+                <motion.span 
+                  className={styles.metaTag}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  style={{ bottom: '15%', left: '-50%' }}
+                >
+                  // BIOMETRIC_SCAN
+                </motion.span>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

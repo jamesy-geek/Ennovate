@@ -174,3 +174,83 @@
     font-size: 7px;
   }
 }
+
+/* TERMINAL / RADAR MODE */
+.terminal .ring {
+  border-color: rgba(0, 255, 65, 0.2);
+  border-style: solid;
+}
+
+.terminal .ring:nth-child(2) { border-color: rgba(0, 255, 65, 0.4); }
+.terminal .ring:nth-child(3) { border-color: rgba(0, 255, 65, 0.6); }
+
+.radarSweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(0, 255, 65, 0.6), transparent);
+  transform-origin: left center;
+  z-index: 5;
+  animation: radarSweep 3s linear infinite;
+  pointer-events: none;
+}
+
+.radarCrosshair {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(to right, transparent 49.5%, var(--g) 49.5%, var(--g) 50.5%, transparent 50.5%),
+    linear-gradient(to bottom, transparent 49.5%, var(--g) 49.5%, var(--g) 50.5%, transparent 50.5%);
+  opacity: 0.15;
+  animation: radarRotate 12s linear infinite;
+}
+
+@keyframes radarRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.blip {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--g);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--g);
+  opacity: 0;
+  animation: blipFade 4s ease-in-out infinite;
+}
+
+.blip1 { top: 20%; left: 30%; animation-delay: 0.5s; }
+.blip2 { top: 60%; left: 75%; animation-delay: 1.8s; }
+.blip3 { top: 40%; left: 15%; animation-delay: 3.2s; }
+
+.terminal .iris {
+  background: transparent;
+  border: 1px solid rgba(0, 255, 65, 0.4);
+}
+
+.terminal .pupil {
+  background: var(--g);
+  box-shadow: 0 0 15px var(--g);
+  width: 20%;
+  height: 20%;
+}
+
+.terminal .scan {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 255, 65, 0.05) 48%,
+    rgba(0, 255, 65, 0.2) 50%,
+    rgba(0, 255, 65, 0.05) 52%,
+    transparent 100%
+  );
+}
+
+.terminal .label {
+  color: var(--g);
+  text-shadow: 0 0 5px var(--g);
+}

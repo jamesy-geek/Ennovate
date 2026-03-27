@@ -1,0 +1,105 @@
+.terminalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--black);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: clamp(14px, 2vw, 18px);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.terminalContent {
+  width: 100%;
+  max-width: 800px;
+}
+
+.green {
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.cursor {
+  display: inline-block;
+  animation: blink 1s infinite steps(2);
+}
+
+@keyframes blink {
+  to { opacity: 0; }
+}
+
+
+.blueprintOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #001a33; /* Classic Blueprint Blue */
+  background-image: 
+    radial-gradient(circle at center, rgba(0, 255, 255, 0.05) 0%, transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: zoom-out;
+  overflow: hidden;
+}
+
+.blueprintContent {
+  width: 90vw;
+  max-width: 1000px;
+  position: relative;
+}
+
+.schematic {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.2));
+  animation: rotateSlow 60s linear infinite;
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.blueprintMeta {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  font-family: var(--font-jetbrains-mono), monospace;
+  color: var(--white);
+  text-align: left;
+}
+
+.blueprintMeta h3 {
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.blueprintMeta p {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+
+.matrixOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1002;
+  background: var(--black);
+  cursor: pointer;
+}
+
+.matrixCanvas {
+  width: 100%;
+  height: 100%;
+}

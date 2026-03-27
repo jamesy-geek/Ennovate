@@ -148,3 +148,52 @@
     font-size: clamp(48px, 16vw, 100px);
   }
 }
+
+.asciiLogo {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(6px, 1.2vw, 12px);
+  line-height: 1.1;
+  color: var(--g);
+  text-align: center;
+  white-space: pre;
+  margin: 0 auto;
+  text-shadow: 0 0 10px var(--g);
+}
+
+.bootLogs {
+  position: absolute;
+  top: 15%;
+  left: 20px;
+  max-width: 300px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.bootLogs p {
+  margin-bottom: 2px;
+}
+
+.ok { color: var(--g); }
+.warn { color: #ffb300; }
+
+.pulseDot {
+  display: inline-block;
+  color: var(--g);
+  margin-right: 4px;
+  animation: terminalBlink 1s infinite alternate;
+}
+
+@keyframes terminalBlink {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .bootLogs {
+    display: none;
+  }
+  .asciiLogo {
+    font-size: 5px;
+  }
+}

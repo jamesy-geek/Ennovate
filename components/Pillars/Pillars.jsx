@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTerminalMode } from "@/hooks/useTerminalMode";
+import useTypewriter from "@/hooks/useTypewriter";
 import styles from "./Pillars.module.css";
 
 const pillars = [
@@ -30,31 +32,50 @@ const pillars = [
   },
 ];
 
+function PillarItem({ pillar, isTerminal }) {
+  const { displayText: typedDesc } = useTypewriter(pillar.desc, { enabled: isTerminal, speed: 15 });
+  
+  return (
+    <motion.div
+      className={`${styles.pillar} ${pillar.variant === "white" ? styles.whiteBand : ""} ${isTerminal ? styles.terminalPillar : ""}`}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className={styles.pillarLine}></div>
+      <div className={styles.pillarNumber}>[ {pillar.id} ]</div>
+      <div className={styles.pillarContent}>
+        <p className={styles.pillarCategory}>{isTerminal ? pillar.category.replace(/\s+/g, '_').toUpperCase() : pillar.category}</p>
+        <h2 className={styles.pillarTitle}>{isTerminal ? pillar.title.replace(/\s+/g, '_').toUpperCase() : pillar.title}</h2>
+        <p className={styles.pillarDesc}>
+          {isTerminal ? typedDesc : pillar.desc}
+        </p>
+        <div className={styles.pillarTags}>
+          {pillar.tags.map((tag) => (
+            <span key={tag} className={styles.tag}>
+              {isTerminal ? tag.replace(/\s+/g, '_') : tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Pillars() {
+  const { isTerminalMode } = useTerminalMode();
+
   return (
     <section className={styles.pillars} id="about">
+      {isTerminalMode && (
+        <div className={styles.sectionHeader}>
+          <h2 className="glow">WHAT_WE_DO</h2>
+          <span className={styles.command}>cat /etc/ennovate/mission.conf</span>
+        </div>
+      )}
       {pillars.map((pillar) => (
-        <motion.div
-          key={pillar.id}
-          className={`${styles.pillar} ${pillar.variant === "white" ? styles.whiteBand : ""}`}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className={styles.pillarLine}></div>
-          <div className={styles.pillarNumber}>[ {pillar.id} ]</div>
-          <div className={styles.pillarContent}>
-            <p className={styles.pillarCategory}>{pillar.category}</p>
-            <h2 className={styles.pillarTitle}>{pillar.title}</h2>
-            <p className={styles.pillarDesc}>{pillar.desc}</p>
-            <div className={styles.pillarTags}>
-              {pillar.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>{tag}</span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        <PillarItem key={pillar.id} pillar={pillar} isTerminal={isTerminalMode} />
       ))}
     </section>
   );

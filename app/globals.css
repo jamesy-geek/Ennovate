@@ -87,3 +87,17 @@ body::after {
   0%, 100% { opacity: 0.3; height: 40px; }
   50% { opacity: 1; height: 60px; }
 }
+
+/* INVERT MODE */
+html.invert-mode {
+  filter: invert(1);
+}
+
+/* Exclude Eye / Schematic elements from inversion */
+html.invert-mode .eyeArea,
+html.invert-mode .eyeSection,
+html.invert-mode .blueprintOverlay,
+html.invert-mode .radarWrapper,
+html.invert-mode img[alt="Ennovate Logo"] {
+  filter: invert(1); /* Double invert cancels it out */
+}

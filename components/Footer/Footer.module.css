@@ -12,6 +12,36 @@
   gap: 16px;
 }
 
+.footerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hint {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+
+:global(html.terminal-mode) .footer {
+  background: var(--bg) !important;
+  border-color: var(--dg) !important;
+}
+
+:global(html.terminal-mode) .left,
+:global(html.terminal-mode) .links a {
+  color: var(--mg) !important;
+}
+
+:global(html.terminal-mode) .hint {
+  color: var(--dg) !important;
+  opacity: 0.4;
+}
+
 .left {
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 9px;
@@ -24,6 +54,22 @@
   display: flex;
   gap: 28px;
   list-style: none;
+  white-space: nowrap;
+}
+
+.blueprintHint {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.1);
+  margin-top: 4px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+:global(html.terminal-mode) .blueprintHint {
+  color: var(--dg);
+  opacity: 0.4;
 }
 
 .links a {

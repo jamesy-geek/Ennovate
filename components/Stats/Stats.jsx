@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import styles from "./Stats.module.css";
+import { useTerminalMode } from "@/hooks/useTerminalMode";
 
 const stats = [
   { label: "Years Active", target: 3, suffix: "+" },
@@ -11,7 +12,7 @@ const stats = [
   { label: "Ideas Left", target: null, value: "∞" },
 ];
 
-function CountUp({ target, suffix }) {
+function CountUp({ target, suffix, isTerminal }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
@@ -35,16 +36,18 @@ function CountUp({ target, suffix }) {
   }, [isInView, target]);
 
   return (
-    <span ref={ref} className={styles.statNum}>
-      {target ? `${count}${suffix}` : "∞"}
+    <span ref={ref} className={`${styles.statNum} ${isTerminal ? 'glow' : ''}`}>
+      {target ? `${count}${suffix}` : (isTerminal ? "INF" : "∞")}
     </span>
   );
 }
 
 export default function Stats() {
+  const { isTerminalMode } = useTerminalMode();
+
   return (
     <motion.div
-      className={styles.stats}
+      className={`${styles.stats} ${isTerminalMode ? styles.terminal : ""}`}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -52,8 +55,10 @@ export default function Stats() {
     >
       {stats.map((stat, i) => (
         <div key={i} className={styles.statItem}>
-          <CountUp target={stat.target} suffix={stat.suffix || ""} />
-          <span className={styles.statLabel}>{stat.label}</span>
+          <CountUp target={stat.target} suffix={stat.suffix || ""} isTerminal={isTerminalMode} />
+          <span className={styles.statLabel}>
+            {isTerminalMode ? stat.label.replace(/\s+/g, '_').toUpperCase() : stat.label}
+          </span>
         </div>
       ))}
     </motion.div>

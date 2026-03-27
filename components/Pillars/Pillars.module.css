@@ -141,3 +141,48 @@
     padding: 28px 20px;
   }
 }
+
+.sectionHeader {
+  grid-column: 1 / -1;
+  padding: 80px 40px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--dg);
+  margin-bottom: 40px;
+}
+
+.sectionHeader h2 {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 32px;
+  color: var(--g);
+}
+
+.command {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  color: var(--dg);
+}
+
+:global(html.terminal-mode) .pillar {
+  border-color: var(--dg) !important;
+  background: transparent !important;
+}
+
+:global(html.terminal-mode) .pillarTitle {
+  color: var(--g) !important;
+  text-shadow: 0 0 8px var(--g);
+}
+
+:global(html.terminal-mode) .tag {
+  border-color: var(--dg) !important;
+  color: var(--mg) !important;
+}
+
+@media (max-width: 768px) {
+  .sectionHeader {
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px 20px 20px;
+  }
+}
