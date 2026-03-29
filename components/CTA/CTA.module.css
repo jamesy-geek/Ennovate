@@ -25,7 +25,8 @@
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 10px;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--text-color);
+  opacity: 0.15;
   letter-spacing: 2px;
   white-space: nowrap;
 }
@@ -43,7 +44,8 @@
   font-size: 10px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--text-color);
+  opacity: 0.4;
   margin-bottom: 20px;
 }
 

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "proj-001",
+    "title": "TechTatva Bot",
+    "description": "High-performance competition robot for TechTatva 2026. Autonomous navigation with computer vision.",
+    "tags": ["Robotics", "OpenCV", "ROS"],
+    "image": "/assets/projects/robotics.png",
+    "status": "In Progress",
+    "year": "2026"
+  },
+  {
+    "id": "proj-002",
+    "title": "Club ERP System",
+    "description": "Full-stack equipment management portal with student auth, admin dashboard, and real-time inventory tracking.",
+    "tags": ["Web App", "Firebase", "Node.js"],
+    "image": "/assets/projects/webapp.png",
+    "status": "Shipped",
+    "year": "2025"
+  },
+  {
+    "id": "proj-003",
+    "title": "Smart Campus IoT",
+    "description": "Network of IoT sensors monitoring classroom occupancy, air quality, and energy consumption across campus.",
+    "tags": ["IoT", "Arduino", "MQTT"],
+    "image": "/assets/projects/iot.png",
+    "status": "Shipped",
+    "year": "2025"
+  },
+  {
+    "id": "proj-004",
+    "title": "Recon Drone v2",
+    "description": "Custom-built quadcopter with FPV camera, GPS waypoints, and automated obstacle avoidance system.",
+    "tags": ["Drone", "PX4", "3D Print"],
+    "image": "/assets/projects/drone.png",
+    "status": "In Progress",
+    "year": "2026"
+  },
+  {
+    "id": "proj-005",
+    "title": "Heritage AI Guide",
+    "description": "AI-powered heritage tourism assistant for Mandya. Multi-language voice guide with object recognition.",
+    "tags": ["AI", "TensorFlow", "NLP"],
+    "image": "/assets/projects/ai.png",
+    "status": "Shipped",
+    "year": "2024"
+  },
+  {
+    "id": "proj-006",
+    "title": "Roboarm MK-III",
+    "description": "6-DOF robotic arm with inverse kinematics, capable of pick-and-place operations with sub-mm precision.",
+    "tags": ["Robotics", "Servo", "IK"],
+    "image": "/assets/projects/robotics.png",
+    "status": "Shipped",
+    "year": "2024"
+  },
+  {
+    "id": "proj-007",
+    "title": "Ennovate Website",
+    "description": "The website you're looking at right now. Built with Next.js, Framer Motion, and way too many late nights.",
+    "tags": ["Web", "Next.js", "Design"],
+    "image": "/assets/projects/webapp.png",
+    "status": "Shipped",
+    "year": "2025"
+  },
+  {
+    "id": "proj-008",
+    "title": "AgriSense",
+    "description": "Soil moisture and weather monitoring station for local farmers. Solar powered with SMS alerts.",
+    "tags": ["IoT", "Solar", "Community"],
+    "image": "/assets/projects/iot.png",
+    "status": "Shipped",
+    "year": "2023"
+  }
+]

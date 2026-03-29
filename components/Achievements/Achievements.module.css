@@ -1,0 +1,246 @@
+.achievements {
+  padding: 40px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 40px 40px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.title {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+
+.subLabel {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+}
+
+.command {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  color: var(--g, #00ff41);
+  letter-spacing: 0.05em;
+}
+
+.scrollHint {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.15em;
+  animation: hintPulse 3s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Horizontal Scroll */
+.scrollContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 0 20px;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollTrack {
+  display: flex;
+  gap: 24px;
+  padding: 0 40px;
+  width: max-content;
+}
+
+.scrollSpacer {
+  flex-shrink: 0;
+  width: 40px;
+}
+
+/* Card */
+.card {
+  flex-shrink: 0;
+  width: 340px;
+  background: rgba(16, 16, 16, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.4s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.card:hover .cardGlow {
+  opacity: 1;
+}
+
+.card:hover .cardEdge {
+  transform: scaleX(1);
+}
+
+/* Glow effect */
+.cardGlow {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(
+    circle at 50% 20%,
+    rgba(255, 215, 0, 0.04) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Image */
+.cardImageWrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.cardImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(16, 16, 16, 0.95)
+  );
+}
+
+.cardYear {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 3px 8px;
+  border-radius: 3px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+/* Content */
+.cardContent {
+  position: relative;
+  z-index: 1;
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardCategory {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 215, 0, 0.55);
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.15;
+}
+
+.cardDesc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.55;
+  font-family: var(--font-barlow), sans-serif;
+}
+
+/* Edge highlight */
+.cardEdge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Shelf accent */
+.shelfLine {
+  margin: 20px 40px 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08) 15%,
+    rgba(255, 255, 255, 0.08) 85%,
+    transparent
+  );
+}
+
+/* Terminal mode */
+.terminalCard .cardCategory {
+  color: rgba(0, 255, 65, 0.6);
+}
+
+.terminalCard .cardEdge {
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
+}
+
+.terminal .title {
+  color: var(--g, #00ff41);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 20px 30px;
+  }
+  .scrollTrack {
+    padding: 0 20px;
+    gap: 16px;
+  }
+  .card {
+    width: 280px;
+  }
+  .cardImageWrap {
+    height: 160px;
+  }
+  .shelfLine {
+    margin: 16px 20px 0;
+  }
+}

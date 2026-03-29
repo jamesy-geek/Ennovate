@@ -52,6 +52,7 @@ export default function RootLayout({ children }) {
         }}
       >
         <TerminalModeProvider>
+          <div className="scanlines" />
           <MatrixRainBG />
           <Cursor />
           <Nav />

@@ -26,26 +26,45 @@
   letter-spacing: 2px;
 }
 
+.command {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  color: var(--g, #00ff41);
+  letter-spacing: 2px;
+}
+
+/* Grid — two cards side by side */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
   background: var(--border);
 }
 
 .card {
   background: var(--mid);
-  padding: 36px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  transition: background 0.3s;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
+  font-family: inherit;
+  color: inherit;
+  transition: background 0.3s, transform 0.3s;
+  padding: 0;
 }
 
 .card:hover {
   background: #1d1d1d;
+}
+
+.cardInner {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
 }
 
 .topBar {
@@ -64,10 +83,6 @@
   transform: scaleX(1);
 }
 
-.featured {
-  grid-column: span 2;
-}
-
 .status {
   display: flex;
   align-items: center;
@@ -83,7 +98,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--white);
+  background: #00ff41;
+  box-shadow: 0 0 6px #00ff41;
   animation: pulse 2s ease infinite;
 }
 
@@ -97,13 +113,18 @@
 .name {
   font-family: var(--font-barlow-condensed), sans-serif;
   font-weight: 700;
-  font-size: clamp(22px, 3vw, 32px);
+  font-size: clamp(28px, 4vw, 42px);
   line-height: 1.1;
   letter-spacing: 0.3px;
+  color: var(--white);
 }
 
-.featured .name {
-  font-size: clamp(28px, 4vw, 46px);
+.tagline {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .desc {
@@ -125,32 +146,6 @@
   padding: 4px 8px;
   border: 1px solid var(--border);
   color: var(--dim);
-}
-
-/* Addition D: Progress Bar */
-.progressContainer {
-  margin: 12px 0;
-}
-
-.progressHeader {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 8px;
-  color: var(--dim);
-  margin-bottom: 6px;
-  letter-spacing: 1px;
-}
-
-.progressBar {
-  height: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  width: 100%;
-}
-
-.progressFill {
-  height: 100%;
-  background: var(--white);
 }
 
 .meta {
@@ -177,6 +172,300 @@
   color: var(--white);
 }
 
+.viewDetails {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.viewDetails span {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s;
+}
+
+.card:hover .viewDetails span {
+  color: var(--white);
+}
+
+/* ── Modal ── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal {
+  background: #0e0e0e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 0;
+  width: 90%;
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal::-webkit-scrollbar {
+  width: 4px;
+}
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.modalClose {
+  position: sticky;
+  top: 16px;
+  float: right;
+  margin: 16px 16px 0 0;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s;
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+
+.modalHeader {
+  padding: 40px 36px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modalStatus {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00ff41;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.modalStatus::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00ff41;
+  box-shadow: 0 0 6px #00ff41;
+  animation: pulse 2s ease infinite;
+}
+
+.modalName {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(36px, 5vw, 52px);
+  letter-spacing: 1px;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.modalTagline {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.modalMeta {
+  display: flex;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.modalMetaItem {
+  flex: 1;
+  padding: 16px 20px;
+  background: #0e0e0e;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modalMetaLabel {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.modalMetaVal {
+  font-family: var(--font-barlow-condensed), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.modalDesc {
+  padding: 24px 36px;
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Event List */
+.eventList {
+  padding: 28px 36px 36px;
+}
+
+.eventListTitle {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.eventGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.eventItem {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eventFeatured {
+  background: rgba(0, 255, 65, 0.03);
+  border-left: 2px solid #00ff41;
+}
+
+.eventItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eventNum {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+}
+
+.eventType {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+}
+
+.eventName {
+  font-family: var(--font-barlow-condensed), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+
+.eventDesc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.6;
+}
+
+.eventTeam {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 1px;
+}
+
+/* Hackathon details */
+.hackathonDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hackathonItem {
+  display: flex;
+  gap: 14px;
+  padding: 20px;
+  background: rgba(20, 20, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+}
+
+.hackathonIcon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.hackathonItem strong {
+  font-family: var(--font-barlow-condensed), sans-serif;
+  font-size: 15px;
+  color: var(--white);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.hackathonItem p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Terminal overrides */
+.terminalCard {
+  border-color: rgba(0, 255, 65, 0.1);
+}
+
+.terminalModal {
+  border-color: rgba(0, 255, 65, 0.15);
+}
+
+.terminal .title {
+  color: var(--g, #00ff41);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 @media (max-width: 768px) {
   .challenges {
     padding: 0 20px 60px;
@@ -184,7 +473,16 @@
   .grid {
     grid-template-columns: 1fr;
   }
-  .featured {
-    grid-column: span 1;
+  .hackathonDetails {
+    grid-template-columns: 1fr;
+  }
+  .modalHeader {
+    padding: 32px 24px 20px;
+  }
+  .modalDesc {
+    padding: 20px 24px;
+  }
+  .eventList {
+    padding: 20px 24px 28px;
   }
 }

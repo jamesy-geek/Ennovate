@@ -2,7 +2,7 @@ import styles from "./JoinSidebar.module.css";
 
 const STEPS = [
   { id: "01", title: "We read every application.", body: "Not a filter algorithm. Actual people from the core team review what you write." },
-  { id: "02", title: "You hear back within a week.", body: "A welcome email with onboarding details, or honest feedback if the timing isn't right." },
+  { id: "02", title: "You hear back within a week.", body: "A welcome email with onboarding details, or honest feedback if the timing isn\u2019t right." },
   { id: "03", title: "First session is a build sprint.", body: "No slides, no orientation. You show up and start working on something real." },
   { id: "04", title: "You pick your track.", body: "Robotics, software, hardware, or cross-disciplinary. Tracks are flexible." },
 ];
@@ -11,7 +11,7 @@ export default function JoinSidebar() {
   return (
     <div className={styles.sidebar}>
       <div className={styles.section}>
-        <h3 className={styles.heading}>// what happens after</h3>
+        <h3 className={styles.heading}>{"// what happens after"}</h3>
         <div className={styles.steps}>
           {STEPS.map((step) => (
             <div key={step.id} className={styles.step}>
@@ -28,9 +28,9 @@ export default function JoinSidebar() {
       <div className={styles.divider}></div>
 
       <div className={styles.section}>
-        <h3 className={styles.heading}>// what we look for</h3>
+        <h3 className={styles.heading}>{"// what we look for"}</h3>
         <p className={styles.lookForBody}>
-          Not grades. Not a portfolio. We want people who get uncomfortable when they're not building something. If you've ever stayed up past 2am because a project wasn't working — you're exactly the right kind of person.
+          {"Not grades. Not a portfolio. We want people who get uncomfortable when they\u2019re not building something. If you\u2019ve ever stayed up past 2am because a project wasn\u2019t working \u2014 you\u2019re exactly the right kind of person."}
         </p>
       </div>
 

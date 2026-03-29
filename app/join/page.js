@@ -46,7 +46,7 @@ export default function JoinPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.9 }}
         >
-          We review applications on a rolling basis. If you're selected you'll hear back within a week. No CV. No portfolio. Just tell us what you build.
+          {"We review applications on a rolling basis. If you\u2019re selected you\u2019ll hear back within a week. No CV. No portfolio. Just tell us what you build."}
         </motion.p>
       </header>
 

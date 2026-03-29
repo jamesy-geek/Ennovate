@@ -1,12 +1,17 @@
 .pillars {
   position: relative;
   z-index: 1;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .pillar {
   display: flex;
   align-items: stretch;
-  min-height: 260px;
+  flex: 1;
+  min-height: 0;
   border-top: 1px solid var(--border);
   overflow: hidden;
   position: relative;
@@ -29,8 +34,8 @@
   font-size: 10px;
   letter-spacing: 2px;
   color: var(--dim);
-  padding: 44px 40px;
-  min-width: 110px;
+  padding: 24px 28px;
+  min-width: 90px;
   border-right: 1px solid var(--border);
   display: flex;
   align-items: flex-start;
@@ -43,7 +48,7 @@
 
 .pillarContent {
   flex: 1;
-  padding: 44px 52px;
+  padding: 20px 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,11 +56,11 @@
 
 .pillarCategory {
   font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 4px;
+  font-size: 9px;
+  letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--dim);
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .whiteBand .pillarCategory {
@@ -64,17 +69,17 @@
 
 .pillarTitle {
   font-family: var(--font-bebas-neue), sans-serif;
-  font-size: clamp(48px, 7vw, 92px);
+  font-size: clamp(32px, 5vw, 60px);
   line-height: 0.9;
   letter-spacing: -1px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 .pillarDesc {
-  font-size: 15px;
+  font-size: 13px;
   color: var(--dim);
   max-width: 460px;
-  line-height: 1.75;
+  line-height: 1.6;
 }
 
 .whiteBand .pillarDesc {
@@ -83,9 +88,9 @@
 
 .pillarTags {
   margin-top: auto;
-  padding-top: 28px;
+  padding-top: 12px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 

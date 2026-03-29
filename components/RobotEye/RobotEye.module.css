@@ -91,8 +91,8 @@
   position: absolute;
   inset: 32%;
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 38%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 60%, transparent 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 38% 38%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
 }
 
@@ -119,25 +119,38 @@
 /* Layer 6: Pupil */
 .pupil {
   position: absolute;
-  width: 36%;
-  height: 36%;
-  background: var(--white);
+  width: 32%;
+  height: 32%;
+  background: #ffffff;
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: pupilMove 8s ease-in-out infinite;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pupil::after {
+  content: '';
+  width: 30%;
+  height: 30%;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff;
+  filter: blur(0.3px);
 }
 
 @keyframes pupilMove {
   0%   { transform: translate(-50%, -50%); }
-  15%  { transform: translate(-20%, -50%); }
-  30%  { transform: translate(-20%, -20%); }
-  45%  { transform: translate(-50%, -20%); }
-  60%  { transform: translate(-80%, -50%); }
-  75%  { transform: translate(-50%, -80%); }
-  90%  { transform: translate(-80%, -80%); }
+  15%  { transform: translate(-35%, -50%); }
+  30%  { transform: translate(-35%, -35%); }
+  45%  { transform: translate(-50%, -35%); }
+  60%  { transform: translate(-65%, -50%); }
+  75%  { transform: translate(-50%, -65%); }
+  90%  { transform: translate(-65%, -65%); }
   100% { transform: translate(-50%, -50%); }
 }
 
@@ -146,7 +159,7 @@
   position: absolute;
   inset: 32%;
   border-radius: 50%;
-  background: var(--black);
+  background: var(--bg-color);
   animation: blink 7s ease-in-out infinite 3s;
   clip-path: inset(50% 0 50% 0);
 }
@@ -253,4 +266,14 @@
 .terminal .label {
   color: var(--g);
   text-shadow: 0 0 5px var(--g);
+}
+.blueprintHint {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--dim);
+  opacity: 0.15;
+  margin-top: 6px;
+  text-transform: uppercase;
+  pointer-events: none;
 }

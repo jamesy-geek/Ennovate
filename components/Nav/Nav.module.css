@@ -9,9 +9,11 @@
   justify-content: space-between;
   padding: 0 40px;
   z-index: 100;
-  background: rgba(9, 9, 9, 0.88);
+  background: var(--bg-color);
+  opacity: 0.95;
   backdrop-filter: blur(14px);
-  transition: border-bottom 0.3s;
+  transition: border-bottom 0.3s, background 0.5s ease;
+  border-bottom: 1px solid var(--border);
 }
 
 .scrolled {
@@ -49,7 +51,7 @@
 
 .navLinks li:hover a,
 .navLinks li.active a {
-  color: var(--white);
+  color: var(--text-color);
 }
 
 /* Morse Dash Indicator */
@@ -58,7 +60,7 @@
   bottom: -4px;
   height: 2px;
   width: 20px;
-  background: var(--white);
+  background: var(--text-color);
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   opacity: 0;
   pointer-events: none;
@@ -72,7 +74,7 @@
   display: none;
   background: none;
   border: 1px solid var(--border);
-  color: var(--white);
+  color: var(--text-color);
   padding: 6px 12px;
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
@@ -86,9 +88,9 @@
   top: 60px;
   left: 0;
   right: 0;
-  background: rgba(9, 9, 9, 0.97);
+  background: var(--bg-color);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--text-color);
   z-index: 99;
   padding: 24px 40px;
   flex-direction: column;
@@ -109,6 +111,34 @@
   text-transform: uppercase;
   color: var(--dim);
   text-decoration: none;
+}
+
+.erpLink {
+  text-decoration: none;
+  color: var(--text-color);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.erpLink:hover {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
+.drawerErp {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  text-decoration: none;
+  margin-top: 12px;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

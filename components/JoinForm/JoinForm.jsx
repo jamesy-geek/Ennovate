@@ -79,10 +79,10 @@ export default function JoinForm() {
               <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
             </svg>
           </div>
-          <h2 className={styles.successHeadline}>You're in.</h2>
+          <h2 className={styles.successHeadline}>{"You're in."}</h2>
           <p className={styles.successSub}>
-            We'll be in touch at your email.<br />
-            Keep building.
+            {"We'll be in touch at your email."}<br />
+            {"Keep building."}
           </p>
           <button onClick={() => window.location.href = "/"} className={styles.backLink}>
             ← Back to ennovate
@@ -149,7 +149,7 @@ export default function JoinForm() {
       <div className={styles.field}>
         <div className={styles.labelRow}>
           <label>WHAT DO YOU WANT TO WORK ON</label>
-          <span className={styles.hint}>// pick all that apply</span>
+          <span className={styles.hint}>{"// pick all that apply"}</span>
         </div>
         <div className={styles.tags}>
           {INTERESTS.map((interest) => (
@@ -170,8 +170,8 @@ export default function JoinForm() {
 
       <div className={styles.field}>
         <div className={styles.labelRow}>
-          <label>SOMETHING YOU'VE BUILT</label>
-          <span className={styles.hint}>// optional</span>
+          <label>{"SOMETHING YOU'VE BUILT"}</label>
+          <span className={styles.hint}>{"// optional"}</span>
         </div>
         <div className={styles.textareaWrapper}>
           <textarea
@@ -187,7 +187,7 @@ export default function JoinForm() {
       <div className={styles.field}>
         <div className={styles.labelRow}>
           <label>WHY ENNOVATE</label>
-          <span className={styles.hint}>// 2–3 sentences</span>
+          <span className={styles.hint}>{"// 2\u20133 sentences"}</span>
         </div>
         <div className={styles.textareaWrapper}>
           <textarea
@@ -214,11 +214,11 @@ export default function JoinForm() {
         </button>
         {status === "error" && (
           <p className={styles.errorNote}>
-            // something went wrong. try again or email hello@ennovate.club
+            {"// something went wrong. try again or email hello@ennovate.club"}
           </p>
         )}
         <p className={styles.note}>
-          // no CV needed · no experience required · rolling review
+          {"// no CV needed \u00B7 no experience required \u00B7 rolling review"}
         </p>
       </div>
     </form>

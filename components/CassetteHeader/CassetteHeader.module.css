@@ -7,7 +7,8 @@
   justify-content: space-between;
   overflow: hidden;
   z-index: 1;
-  background: var(--black);
+  background: var(--bg-color);
+  transition: background 0.5s ease;
 }
 
 /* Film grain overlay */
@@ -49,7 +50,8 @@
   font-family: var(--font-bebas-neue), sans-serif;
   font-size: clamp(80px, 18vw, 240px);
   letter-spacing: 0.15em;
-  color: var(--white);
+  color: var(--text-color);
+  transition: color 0.5s ease;
   line-height: 0.85;
   text-align: center;
   margin: 0;
@@ -76,6 +78,7 @@
   padding: 12px 40px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  background: var(--bg-color);
 }
 
 .metaItem {
@@ -107,6 +110,7 @@
   align-items: center;
   padding: 10px 40px;
   border-top: 1px solid var(--border);
+  background: var(--bg-color);
 }
 
 .footerLeft,

@@ -107,7 +107,7 @@ export default function EyeSection() {
                   exit={{ opacity: 0, scale: 0.5 }}
                   style={{ top: '10%', right: '-40%' }}
                 >
-                  // COORD_VALIDATED
+                  {"// COORD_VALIDATED"}
                 </motion.span>
                 <motion.span 
                   className={styles.metaTag}
@@ -116,7 +116,7 @@ export default function EyeSection() {
                   exit={{ opacity: 0, scale: 0.5 }}
                   style={{ bottom: '15%', left: '-50%' }}
                 >
-                  // BIOMETRIC_SCAN
+                  {"// BIOMETRIC_SCAN"}
                 </motion.span>
               </>
             )}
