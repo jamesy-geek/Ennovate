@@ -2,48 +2,60 @@
   {
     "id": "ach-001",
     "title": "TechTatva 2025 — 1st Place",
+    "terminalTitle": "WIN_TECHTATVA_2025",
     "description": "Won first place in the flagship robotics competition at TechTatva 2025 with our autonomous navigation bot.",
     "category": "Competition",
+    "terminalCategory": "COMP_WIN",
     "image": "/assets/achievements/trophy.png",
     "year": "2025"
   },
   {
     "id": "ach-002",
     "title": "Smart India Hackathon Finalist",
+    "terminalTitle": "SIH_NATL_FINALIST",
     "description": "Selected as national finalists for our heritage tourism AI solution at Smart India Hackathon.",
     "category": "Hackathon",
+    "terminalCategory": "HACK_FINAL",
     "image": "/assets/achievements/medal.png",
     "year": "2024"
   },
   {
     "id": "ach-003",
     "title": "Best Innovation Award",
+    "terminalTitle": "BEST_INNOV_AWARD",
     "description": "Received the Best Innovation Award at the university tech fest for our IoT campus monitoring system.",
     "category": "Award",
+    "terminalCategory": "AWARD_RECOGNITION",
     "image": "/assets/achievements/certificate.png",
     "year": "2024"
   },
   {
     "id": "ach-004",
     "title": "Robocon Regional Qualifiers",
+    "terminalTitle": "ROBOCON_REGIONAL",
     "description": "Qualified for regional rounds of ABU Robocon with our custom-built competition robot.",
     "category": "Competition",
+    "terminalCategory": "COMP_QUAL",
     "image": "/assets/achievements/trophy.png",
     "year": "2023"
   },
   {
     "id": "ach-005",
     "title": "IEEE Project Exhibition",
+    "terminalTitle": "IEEE_EXPO_SELECT",
     "description": "Featured in the IEEE Student Chapter project exhibition for outstanding embedded systems work.",
     "category": "Recognition",
+    "terminalCategory": "EXPO_RECOGNITION",
     "image": "/assets/achievements/medal.png",
     "year": "2023"
   },
   {
     "id": "ach-006",
     "title": "Community Impact Award",
+    "terminalTitle": "COMMUNITY_AWARD_01",
     "description": "Recognized by the local municipality for our AgriSense project helping farmers with soil monitoring.",
     "category": "Community",
+    "terminalCategory": "SOC_IMPACT",
     "image": "/assets/achievements/certificate.png",
     "year": "2024"
   }

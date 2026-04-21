@@ -62,6 +62,7 @@
 }
 
 .body {
+  font-family: var(--font-barlow), sans-serif;
   font-size: 15px;
   color: var(--dim);
   line-height: 1.85;

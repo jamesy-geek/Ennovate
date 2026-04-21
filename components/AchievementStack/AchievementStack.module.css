@@ -1,0 +1,194 @@
+.container {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-primary, #000);
+  color: var(--text-primary, #fff);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridBtn {
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 16px 32px;
+  font-weight: 900;
+  font-size: 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gridBtn:hover {
+  transform: scale(1.1);
+  background: var(--accent-red, #ff3e3e);
+  color: #fff;
+}
+
+.terminal .gridBtn {
+  background: #000;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  border-radius: 0;
+  font-family: var(--font-mono, monospace);
+  text-shadow: 0 0 5px #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 120px 60px;
+  z-index: 10;
+}
+
+.grid .card {
+  width: 100%;
+}
+
+.stackWrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* Correct centering of the stack since cards are fixed */
+}
+
+.card {
+  width: 320px;
+  background: #111;
+  border: 2px solid #333;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  background: linear-gradient(135deg, #222, #0a0a0a);
+}
+
+.card.expanded {
+  width: 450px;
+  z-index: 1000 !important;
+  border-color: #fff;
+}
+
+.grid .card.expanded {
+  width: 100%;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, #111);
+}
+
+.content {
+  padding: 24px;
+}
+
+.category {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 2px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 10px 0;
+  line-height: 1.2;
+}
+
+.description {
+  font-size: 15px;
+  color: #ccc;
+  line-height: 1.6;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #333;
+}
+
+.year {
+  display: block;
+  margin-top: 20px;
+  font-weight: 900;
+  font-size: 32px;
+  opacity: 0.1;
+  text-align: right;
+}
+
+.controlsHint {
+  margin-top: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-red, #ff3e3e);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.stackHint {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 30px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  z-index: 1000;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+/* Terminal Card specific styles */
+.terminalCard {
+  border-radius: 0;
+  border: 1px solid #00ff00;
+  background: #000;
+  color: #00ff00;
+}
+
+.terminalCard .title {
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+}
+
+.terminalCard .description {
+  font-family: var(--font-mono, monospace);
+}
+
+.terminalCard .category {
+  color: #00ff00;
+  font-family: var(--font-mono, monospace);
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 280px;
+  }
+}

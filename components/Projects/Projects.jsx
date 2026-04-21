@@ -4,264 +4,140 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "./Projects.module.css";
-import { useTerminalMode } from "@/hooks/useTerminalMode";
 import projectsData from "@/data/projects.json";
 
-function ProjectCard({ project, isActive, isPaused, onClick, style, isTerminal }) {
-  return (
-    <motion.div
-      className={`${styles.card} ${isActive ? styles.cardActive : ""} ${isActive && isPaused ? styles.cardRaised : ""} ${isTerminal ? styles.terminalCard : ""}`}
-      style={style}
-      onClick={onClick}
-      whileHover={!isActive ? { scale: 1.05 } : {}}
-      animate={isActive && isPaused ? { y: -14 } : { y: 0 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      layout
-    >
-      <div className={styles.cardImage}>
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="300px"
-          style={{ objectFit: "cover" }}
-        />
-        <div className={styles.cardImageOverlay} />
-      </div>
-      <div className={styles.cardContent}>
-        <div className={styles.cardStatus}>
-          <span className={project.status === "Shipped" ? styles.dotShipped : styles.dotActive}>
-          </span>
-          {isTerminal ? project.status.replace(/\s+/g, "_").toUpperCase() : project.status}
-        </div>
-        <h3 className={styles.cardTitle}>{isTerminal ? project.title.toUpperCase() : project.title}</h3>
-        {isActive && isPaused && (
-          <motion.p
-            className={styles.cardDesc}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
-            {project.description}
-          </motion.p>
-        )}
-        <div className={styles.cardTags}>
-          {project.tags.map((tag) => (
-            <span key={tag} className={styles.cardTag}>
-              {isTerminal ? tag.toUpperCase() : tag}
-            </span>
-          ))}
-        </div>
-        <span className={styles.cardYear}>{project.year}</span>
-      </div>
-    </motion.div>
-  );
-}
-
-function ProjectEditModal({ project, onClose, onSave }) {
-  const [form, setForm] = useState({ ...project });
-
-  const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-
-  return (
-    <motion.div
-      className={styles.modalOverlay}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <motion.div
-        className={styles.modal}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h3 className={styles.modalTitle}>Edit Project</h3>
-        <div className={styles.formGroup}>
-          <label>Title</label>
-          <input
-            type="text"
-            value={form.title}
-            onChange={(e) => handleChange("title", e.target.value)}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Description</label>
-          <textarea
-            value={form.description}
-            onChange={(e) => handleChange("description", e.target.value)}
-            rows={3}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Tags (comma separated)</label>
-          <input
-            type="text"
-            value={form.tags.join(", ")}
-            onChange={(e) => handleChange("tags", e.target.value.split(",").map((t) => t.trim()))}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Status</label>
-          <select
-            value={form.status}
-            onChange={(e) => handleChange("status", e.target.value)}
-          >
-            <option value="Shipped">Shipped</option>
-            <option value="In Progress">In Progress</option>
-          </select>
-        </div>
-        <div className={styles.formGroup}>
-          <label>Year</label>
-          <input
-            type="text"
-            value={form.year}
-            onChange={(e) => handleChange("year", e.target.value)}
-          />
-        </div>
-        <div className={styles.modalActions}>
-          <button className={styles.btnCancel} onClick={onClose}>Cancel</button>
-          <button className={styles.btnSave} onClick={() => onSave(form)}>Save</button>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
 export default function Projects() {
-  const { isTerminalMode } = useTerminalMode();
-  const [projects, setProjects] = useState(projectsData);
+  const [projects] = useState(projectsData);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [rotation, setRotation] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState(0);
-  const [startRotation, setStartRotation] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isAdminMode, setIsAdminMode] = useState(false);
-  const [editingProject, setEditingProject] = useState(null);
-  const [showAdminPrompt, setShowAdminPrompt] = useState(false);
-  const [adminPassword, setAdminPassword] = useState("");
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragRotation, setDragRotation] = useState(0);
+  const [isAutoRotating, setIsAutoRotating] = useState(true);
+  const autoRotateTimer = useRef(null);
   const ringRef = useRef(null);
-  const autoRotateRef = useRef(null);
 
-  const cardCount = projects.length;
-  const angleStep = 360 / cardCount;
-
-  // Auto-rotate when not dragging AND not paused
-  useEffect(() => {
-    if (isDragging || isPaused) return;
-
-    autoRotateRef.current = setInterval(() => {
-      setRotation((prev) => prev + 0.15);
-    }, 30);
-
-    return () => clearInterval(autoRotateRef.current);
-  }, [isDragging, isPaused]);
-
-  // Sync active index from rotation
-  useEffect(() => {
-    const normalizedRotation = (((-rotation % 360) + 360) % 360);
-    const idx = Math.round(normalizedRotation / angleStep) % cardCount;
-    setActiveIndex(idx);
-  }, [rotation, angleStep, cardCount]);
-
-  // Mouse drag handlers
-  const handlePointerDown = useCallback((e) => {
-    setIsDragging(true);
-    setDragStart(e.clientX);
-    setStartRotation(rotation);
-    e.preventDefault();
-  }, [rotation]);
-
-  const handlePointerMove = useCallback((e) => {
-    if (!isDragging) return;
-    const delta = e.clientX - dragStart;
-    setRotation(startRotation + delta * 0.3);
-  }, [isDragging, dragStart, startRotation]);
-
-  const handlePointerUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  // Scroll to rotate — ONLY on the ring container (local handler)
-  const handleWheel = useCallback((e) => {
-    e.stopPropagation();
-    setIsPaused(false);
-    setRotation((prev) => prev - e.deltaY * 0.15);
-  }, []);
+  const numCards = projects.length;
+  const angleStep = 360 / numCards;
+  const [radius, setRadius] = useState(580);
 
   useEffect(() => {
-    window.addEventListener("pointerup", handlePointerUp);
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => {
-      window.removeEventListener("pointerup", handlePointerUp);
-      window.removeEventListener("pointermove", handlePointerMove);
+    const updateRadius = () => {
+      const width = window.innerWidth;
+      let baseR = numCards <= 4 ? 360 : numCards <= 6 ? 460 : 520;
+      if (width <= 480) {
+        baseR *= 0.55;
+      } else if (width <= 768) {
+        baseR *= 0.7;
+      } else if (width <= 1024) {
+        baseR *= 0.85;
+      }
+      setRadius(baseR);
     };
-  }, [handlePointerUp, handlePointerMove]);
+    
+    updateRadius();
+    window.addEventListener("resize", updateRadius);
+    return () => window.removeEventListener("resize", updateRadius);
+  }, [numCards]);
 
-  // Touch drag handlers
-  const handleTouchStart = useCallback((e) => {
-    setIsDragging(true);
-    setDragStart(e.touches[0].clientX);
-    setStartRotation(rotation);
-  }, [rotation]);
+  const baseRotation = -activeIndex * angleStep + dragRotation;
 
-  const handleTouchMove = useCallback((e) => {
-    if (!isDragging) return;
-    const delta = e.touches[0].clientX - dragStart;
-    setRotation(startRotation + delta * 0.4);
-  }, [isDragging, dragStart, startRotation]);
+  useEffect(() => {
+    if (!isAutoRotating) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % numCards);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isAutoRotating, numCards]);
 
-  const handleTouchEnd = useCallback(() => {
-    setIsDragging(false);
+  const pauseAutoRotate = useCallback(() => {
+    setIsAutoRotating(false);
+    clearTimeout(autoRotateTimer.current);
+    autoRotateTimer.current = setTimeout(() => {
+      setIsAutoRotating(true);
+    }, 8000);
   }, []);
 
-  // Click on a card to snap to it and pause
-  const snapToCard = (index) => {
-    if (isPaused && index === activeIndex) {
-      // Clicking the same active card again unpauses
-      setIsPaused(false);
-    } else {
-      setRotation(-index * angleStep);
-      setIsPaused(true);
-    }
+  useEffect(() => {
+    return () => clearTimeout(autoRotateTimer.current);
+  }, []);
+
+  const goTo = useCallback(
+    (idx) => {
+      const wrapped = ((idx % numCards) + numCards) % numCards;
+      setActiveIndex(wrapped);
+      setDragRotation(0);
+      pauseAutoRotate();
+    },
+    [numCards, pauseAutoRotate]
+  );
+
+  const prev = () => goTo(activeIndex - 1);
+  const next = () => goTo(activeIndex + 1);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") {
+        next();
+        e.preventDefault();
+      }
+      if (e.key === "ArrowLeft") {
+        prev();
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeIndex]);
+
+  const onPointerDown = (e) => {
+    setIsDragging(true);
+    setDragStartX(e.clientX);
+    setDragRotation(0);
+    e.currentTarget.setPointerCapture(e.pointerId);
+    pauseAutoRotate();
   };
 
-  // Click outside the ring to unpause
-  const handleSectionClick = (e) => {
-    if (isPaused && ringRef.current && !ringRef.current.contains(e.target)) {
-      setIsPaused(false);
-    }
+  const onPointerMove = (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartX;
+    setDragRotation(dx * 0.3);
   };
 
-  // Admin
-  const handleAdminLogin = () => {
-    if (adminPassword === "ennovate2024") {
-      setIsAdminMode(true);
-      setShowAdminPrompt(false);
-      setAdminPassword("");
-    } else {
-      alert("Wrong password.");
+  const onPointerUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    const cardsMoved = Math.round(dragRotation / angleStep);
+    if (cardsMoved !== 0) {
+      goTo(activeIndex - cardsMoved);
     }
+    setDragRotation(0);
   };
 
-  const handleSaveProject = (updatedProject) => {
-    setProjects((prev) =>
-      prev.map((p) => (p.id === updatedProject.id ? updatedProject : p))
-    );
-    setEditingProject(null);
-  };
+  const lastWheelTime = useRef(0);
+
+  const onWheel = useCallback(
+    (e) => {
+      const now = Date.now();
+      if (now - lastWheelTime.current < 400) return;
+
+      const threshold = 25;
+      if (e.deltaY > threshold || e.deltaX > threshold) {
+        next();
+        lastWheelTime.current = now;
+      } else if (e.deltaY < -threshold || e.deltaX < -threshold) {
+        prev();
+        lastWheelTime.current = now;
+      }
+    },
+    [next, prev]
+  );
 
   return (
     <section
-      className={`${styles.projects} ${isTerminalMode ? styles.terminal : ""}`}
+      className={styles.projects}
       id="projects"
-      onClick={handleSectionClick}
     >
+      {/* Header */}
       <motion.div
         className={styles.header}
         initial={{ opacity: 0, y: 20 }}
@@ -269,136 +145,136 @@ export default function Projects() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className={`${styles.title} ${isTerminalMode ? "glow" : ""}`}>
-          {isTerminalMode ? "PROJECT_ARCHIVE" : "PROJECTS"}
-        </h2>
-        <span className={isTerminalMode ? styles.command : styles.subLabel}>
-          {isTerminalMode ? "ls -la /builds" : "// what we've shipped"}
-        </span>
-        <div className={styles.headerActions}>
-          {!isAdminMode ? (
-            <button
-              className={styles.adminBtn}
-              onClick={() => setShowAdminPrompt(!showAdminPrompt)}
-            >
-              [ {isTerminalMode ? "SUDO" : "Admin"} ]
-            </button>
-          ) : (
-            <span className={styles.adminBadge}>✓ ADMIN</span>
-          )}
+        <div className={styles.headerLeft}>
+          <h2 className={styles.title}>PROJECTS</h2>
+          <span className={styles.subLabel}>// what we've shipped</span>
+        </div>
+        <div className={styles.headerRight}>
+          <span className={styles.counter}>
+            {String(activeIndex + 1).padStart(2, "0")} /{" "}
+            {String(projects.length).padStart(2, "0")}
+          </span>
+          <button
+            className={styles.navBtn}
+            onClick={prev}
+            aria-label="Previous"
+          >
+            ←
+          </button>
+          <button className={styles.navBtn} onClick={next} aria-label="Next">
+            →
+          </button>
         </div>
       </motion.div>
 
-      {/* Admin password prompt */}
-      <AnimatePresence>
-        {showAdminPrompt && (
-          <motion.div
-            className={styles.adminPrompt}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <input
-              type="password"
-              placeholder="Enter admin password..."
-              value={adminPassword}
-              onChange={(e) => setAdminPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleAdminLogin()}
-              className={styles.adminInput}
-            />
-            <button className={styles.adminSubmit} onClick={handleAdminLogin}>
-              {isTerminalMode ? "AUTH" : "Login"}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Ring Carousel */}
-      <div className={styles.ringWrapper}>
-        <div className={styles.dragHint}>
-          {isPaused
-            ? (isTerminalMode ? "PAUSED — CLICK_TO_RESUME" : "paused — click outside to resume")
-            : (isTerminalMode ? "← DRAG_TO_ROTATE →" : "← drag to explore →")}
-        </div>
+      {/* 3D Ring Carousel */}
+      <div
+        className={styles.scene}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
+        onWheel={onWheel}
+        style={{ cursor: isDragging ? "grabbing" : "grab" }}
+      >
         <div
           ref={ringRef}
-          className={styles.ringContainer}
-          onPointerDown={handlePointerDown}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onWheel={handleWheel}
-          style={{ cursor: isDragging ? "grabbing" : "grab" }}
+          className={styles.ring}
+          style={{
+            transform: `rotateY(${baseRotation}deg)`,
+            transition: isDragging
+              ? "none"
+              : "transform 0.8s cubic-bezier(0.23, 1, 0.32, 1)",
+          }}
         >
-          <div
-            className={styles.ring}
-            style={{
-              transform: `rotateY(${rotation}deg)`,
-              transition: isDragging ? "none" : "transform 0.1s ease-out",
-            }}
-          >
-            {projects.map((project, i) => {
-              const angle = i * angleStep;
-              const isActive = i === activeIndex;
-              return (
-                <div
-                  key={project.id}
-                  className={styles.cardSlot}
-                  style={{
-                    transform: `rotateY(${angle}deg) translateZ(380px)`,
-                  }}
-                >
-                  <ProjectCard
-                    project={project}
-                    isActive={isActive}
-                    isPaused={isPaused}
-                    onClick={() => snapToCard(i)}
-                    isTerminal={isTerminalMode}
+          {projects.map((project, i) => {
+            const angle = i * angleStep;
+            let angleDiff = ((i - activeIndex) * angleStep + 360) % 360;
+            if (angleDiff > 180) angleDiff = 360 - angleDiff;
+            const isFront = angleDiff < angleStep * 0.5;
+            const isNear = angleDiff < angleStep * 1.5;
+
+            return (
+              <div
+                key={project.id}
+                className={`${styles.card} ${isFront ? styles.cardActive : ""}`}
+                style={{
+                  transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                  opacity: isFront ? 1 : isNear ? 0.7 : 0.4,
+                  filter: isFront
+                    ? "none"
+                    : `brightness(${isNear ? 0.7 : 0.45})`,
+                }}
+                onClick={() => goTo(i)}
+              >
+                {/* Image */}
+                <div className={styles.cardImage}>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="300px"
+                    style={{ objectFit: "cover" }}
                   />
-                  {isAdminMode && (
-                    <button
-                      className={styles.editBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setEditingProject(project);
-                      }}
-                    >
-                      ✎
-                    </button>
-                  )}
+                  <div className={styles.cardImageOverlay} />
+                  <span className={styles.cardYear}>{project.year}</span>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Content */}
+                <div className={styles.cardContent}>
+                  <div className={styles.cardStatus}>
+                    <span
+                      className={
+                        project.status === "Shipped"
+                          ? styles.dotShipped
+                          : styles.dotInProgress
+                      }
+                    />
+                    {project.status}
+                  </div>
+                  <h3 className={styles.cardTitle}>{project.title}</h3>
+                  <p className={styles.cardDesc}>{project.description}</p>
+                  <div className={styles.cardTags}>
+                    {project.tags.map((tag) => (
+                      <span key={tag} className={styles.cardTag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Active project details */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            className={styles.activeDetails}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            <span className={styles.activeNum}>
-              {String(activeIndex + 1).padStart(2, "0")}/{String(cardCount).padStart(2, "0")}
-            </span>
-            <span className={styles.activeName}>{projects[activeIndex]?.title}</span>
-          </motion.div>
-        </AnimatePresence>
+        {/* Reflection glow on the ground */}
+        <div className={styles.groundGlow} />
       </div>
 
-      {/* Edit Modal */}
-      <AnimatePresence>
-        {editingProject && (
-          <ProjectEditModal
-            project={editingProject}
-            onClose={() => setEditingProject(null)}
-            onSave={handleSaveProject}
+      {/* Dot indicators */}
+      <div className={styles.dots}>
+        {projects.map((_, i) => (
+          <button
+            key={i}
+            className={`${styles.dot} ${i === activeIndex ? styles.dotActive2 : ""}`}
+            onClick={() => goTo(i)}
+            aria-label={`Go to project ${i + 1}`}
           />
-        )}
+        ))}
+      </div>
+
+      {/* Active project name */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeIndex}
+          className={styles.activeName}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.25 }}
+        >
+          {projects[activeIndex]?.title}
+        </motion.div>
       </AnimatePresence>
     </section>
   );

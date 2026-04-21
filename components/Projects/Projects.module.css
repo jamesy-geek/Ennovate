@@ -1,16 +1,37 @@
+/* =====================================================
+   Projects — 3D Ring Carousel
+   ===================================================== */
+
 .projects {
-  padding: 40px 0 80px;
+  padding: 60px 0 80px;
   position: relative;
   overflow: hidden;
 }
 
-/* Header */
+/* ── Header ───────────────────────────────────────── */
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+  z-index: 20;
+}
+
+.headerLeft {
   display: flex;
   align-items: baseline;
   gap: 20px;
-  padding: 0 40px 40px;
   flex-wrap: wrap;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .title {
@@ -34,173 +55,128 @@
   letter-spacing: 0.05em;
 }
 
-.headerActions {
-  margin-left: auto;
+.counter {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.1em;
+  min-width: 50px;
+  text-align: right;
 }
 
-.adminBtn {
+.navBtn {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.4);
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.7rem;
-  padding: 6px 16px;
-  cursor: pointer;
-  letter-spacing: 0.1em;
-  transition: all 0.3s ease;
-}
-
-.adminBtn:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.adminBadge {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.7rem;
-  color: #00ff41;
-  letter-spacing: 0.1em;
-}
-
-/* Admin prompt */
-.adminPrompt {
-  display: flex;
-  gap: 8px;
-  padding: 0 40px 30px;
-  overflow: hidden;
-}
-
-.adminInput {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--white);
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.8rem;
-  padding: 8px 16px;
-  width: 240px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.adminInput:focus {
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.adminSubmit {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--white);
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.75rem;
-  padding: 8px 20px;
-  cursor: pointer;
-  letter-spacing: 0.1em;
-  transition: all 0.3s;
-}
-
-.adminSubmit:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* Ring carousel */
-.ringWrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.dragHint {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.2);
-  letter-spacing: 0.15em;
-  margin-bottom: 20px;
-  animation: pulse 3s ease-in-out infinite;
-}
-
-.ringContainer {
-  width: 100%;
-  height: 420px;
-  perspective: 1200px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.5);
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  border-radius: 4px;
+}
+
+.navBtn:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── 3D Scene — perspective container ─────────────── */
+.scene {
+  width: 100%;
+  height: 520px;
+  perspective: 1200px;
+  perspective-origin: 50% 45%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
   user-select: none;
-  touch-action: pan-y;
   -webkit-user-select: none;
 }
 
+/* ── Ring — the rotating 3D container ─────────────── */
 .ring {
+  width: 260px;
+  height: 260px;
   position: relative;
-  width: 200px;
-  height: 320px;
   transform-style: preserve-3d;
   will-change: transform;
 }
 
-.cardSlot {
+/* ── Individual card ──────────────────────────────── */
+.card {
+  width: 260px;
+  height: 260px;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
   backface-visibility: hidden;
-}
-
-/* Individual card */
-.card {
-  width: 220px;
-  height: 300px;
-  background: rgba(20, 20, 20, 0.9);
+  background: rgba(10, 10, 10, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  transition: opacity 0.6s ease, filter 0.6s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .cardActive {
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.05), 0 20px 60px rgba(0, 0, 0, 0.5);
-  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 80px rgba(255, 255, 255, 0.03);
+  z-index: 10;
 }
 
-.cardRaised {
-  border-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 0 60px rgba(255, 255, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.6);
-  transform: scale(1.08);
-}
-
+/* Card image */
 .cardImage {
   position: relative;
   width: 100%;
-  height: 120px;
-  flex-shrink: 0;
+  height: 100px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .cardImageOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 40%, rgba(20, 20, 20, 0.95));
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(10, 10, 10, 0.95)
+  );
+  z-index: 1;
 }
 
+.cardYear {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 2;
+}
+
+/* Card content */
 .cardContent {
-  padding: 14px 16px;
-  flex: 1;
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
+  flex: 1;
 }
 
 .cardStatus {
@@ -208,9 +184,9 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
 }
 
@@ -220,270 +196,232 @@
   border-radius: 50%;
   background: #00ff41;
   box-shadow: 0 0 6px #00ff41;
+  flex-shrink: 0;
 }
 
-.dotActive {
+.dotInProgress {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #ffaa00;
   box-shadow: 0 0 6px #ffaa00;
+  flex-shrink: 0;
   animation: pulse 2s ease-in-out infinite;
 }
 
 .cardTitle {
   font-family: var(--font-bebas-neue), sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   letter-spacing: 0.04em;
   color: var(--white);
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .cardDesc {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5;
   font-family: var(--font-barlow), sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .cardTags {
   display: flex;
-  gap: 4px;
+  gap: 5px;
   flex-wrap: wrap;
   margin-top: auto;
+  padding-top: 6px;
 }
 
 .cardTag {
   font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.55rem;
-  padding: 2px 8px;
+  font-size: 0.52rem;
+  padding: 3px 7px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.38);
+  letter-spacing: 0.06em;
   border-radius: 2px;
 }
 
-.cardYear {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.2);
-  letter-spacing: 0.1em;
-  margin-top: 4px;
-}
-
-/* Edit button */
-.editBtn {
+/* ── Ground glow / reflection ────────────────────── */
+.groundGlow {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
-  background: rgba(0, 255, 65, 0.15);
-  border: 1px solid rgba(0, 255, 65, 0.3);
-  color: #00ff41;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 120px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Dot nav ──────────────────────────────────────── */
+.dots {
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 10;
-  transition: all 0.3s;
-}
-
-.editBtn:hover {
-  background: rgba(0, 255, 65, 0.3);
-}
-
-/* Active details readout */
-.activeDetails {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 30px;
-  padding: 12px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(20, 20, 20, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.activeNum {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.1em;
-}
-
-.activeName {
-  font-family: var(--font-bebas-neue), sans-serif;
-  font-size: 1.15rem;
-  color: var(--white);
-  letter-spacing: 0.05em;
-}
-
-/* Modal */
-.modalOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-
-.modal {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 32px;
-  width: 90%;
-  max-width: 480px;
-}
-
-.modalTitle {
-  font-family: var(--font-bebas-neue), sans-serif;
-  font-size: 1.8rem;
-  letter-spacing: 0.05em;
-  margin-bottom: 24px;
-  color: var(--white);
-}
-
-.formGroup {
-  margin-bottom: 16px;
-}
-
-.formGroup label {
-  display: block;
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.4);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.formGroup input,
-.formGroup textarea,
-.formGroup select {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--white);
-  font-family: var(--font-barlow), sans-serif;
-  font-size: 0.9rem;
-  padding: 10px 14px;
-  border-radius: 4px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.formGroup input:focus,
-.formGroup textarea:focus,
-.formGroup select:focus {
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.formGroup select {
-  cursor: pointer;
-}
-
-.formGroup select option {
-  background: #141414;
-}
-
-.modalActions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+  gap: 8px;
   margin-top: 24px;
 }
 
-.btnCancel {
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.5);
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.75rem;
-  padding: 8px 20px;
+.dot {
+  width: 16px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
   cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: all 0.3s;
+  transition: background 0.25s, width 0.25s;
+  padding: 0;
 }
 
-.btnCancel:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  color: var(--white);
+.dot:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
-.btnSave {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--white);
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.75rem;
-  padding: 8px 24px;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: all 0.3s;
+.dotActive2 {
+  width: 28px;
+  background: rgba(255, 255, 255, 0.75);
 }
 
-.btnSave:hover {
-  background: rgba(255, 255, 255, 0.2);
+/* ── Active name readout ──────────────────────────── */
+.activeName {
+  text-align: center;
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.2);
+  margin-top: 12px;
 }
 
-/* Terminal variant */
+/* ── Terminal variant ─────────────────────────────── */
 .terminalCard {
-  border-color: rgba(0, 255, 65, 0.15);
+  border-color: rgba(0, 255, 65, 0.1);
 }
 
 .terminal .title {
   color: var(--g, #00ff41);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .header {
-    padding: 0 20px 30px;
-  }
+.terminal .cardActive {
+  box-shadow: 0 10px 60px rgba(0, 255, 65, 0.08),
+    0 0 0 1px rgba(0, 255, 65, 0.15);
+}
 
-  .ringContainer {
-    height: 360px;
-    perspective: 900px;
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 1024px) {
+  .scene {
+    height: 460px;
+    perspective: 1000px;
   }
 
   .ring {
-    width: 160px;
-    height: 280px;
-  }
-
-  .cardSlot {
-    transform: rotateY(var(--angle)) translateZ(260px) !important;
+    width: 240px;
+    height: 240px;
   }
 
   .card {
-    width: 180px;
-    height: 260px;
+    width: 240px;
+    height: 240px;
   }
 
   .cardImage {
     height: 90px;
   }
+}
 
-  .adminPrompt {
-    padding: 0 20px 20px;
-    flex-direction: column;
+@media (max-width: 768px) {
+  .projects {
+    padding: 40px 0 60px;
   }
 
-  .adminInput {
-    width: 100%;
+  .header {
+    padding: 0 20px 16px;
+  }
+
+  .scene {
+    height: 420px;
+    perspective: 900px;
+  }
+
+  .ring {
+    width: 220px;
+    height: 220px;
+  }
+
+  .card {
+    width: 220px;
+    height: 220px;
+  }
+
+  .cardImage {
+    height: 80px;
+  }
+
+  .cardTitle {
+    font-size: 1.15rem;
+  }
+
+  .cardDesc {
+    font-size: 0.65rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .groundGlow {
+    width: 400px;
+    height: 80px;
   }
 }
 
+@media (max-width: 480px) {
+  .scene {
+    height: 380px;
+    perspective: 800px;
+  }
+
+  .ring {
+    width: 200px;
+    height: 200px;
+  }
+
+  .card {
+    width: 200px;
+    height: 200px;
+  }
+
+  .cardImage {
+    height: 70px;
+  }
+
+  .cardContent {
+    padding: 12px 14px 14px;
+  }
+
+  .cardTitle {
+    font-size: 1.05rem;
+  }
+
+  .groundGlow {
+    width: 300px;
+  }
+}
+
+/* ── Animations ───────────────────────────────────── */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }

@@ -47,8 +47,11 @@
 }
 
 .logotype {
-  font-family: var(--font-bebas-neue), sans-serif;
-  font-size: clamp(80px, 18vw, 240px);
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 800;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  font-size: clamp(40px, 11vw, 150px);
   letter-spacing: 0.15em;
   color: var(--text-color);
   transition: color 0.5s ease;

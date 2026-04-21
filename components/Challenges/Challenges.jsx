@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Challenges.module.css";
-import { useTerminalMode } from "@/hooks/useTerminalMode";
+import { EncryptedText } from "@/components/TextEffects/TextEffects";
 
 const nexovateEvents = [
   {
@@ -85,7 +85,7 @@ const competitions = [
   },
 ];
 
-function CompetitionDetailModal({ competition, onClose, isTerminal }) {
+function CompetitionDetailModal({ competition, onClose }) {
   const isNexovate = competition.id === 1;
 
   return (
@@ -97,7 +97,7 @@ function CompetitionDetailModal({ competition, onClose, isTerminal }) {
       onClick={onClose}
     >
       <motion.div
-        className={`${styles.modal} ${isTerminal ? styles.terminalModal : ""}`}
+        className={styles.modal}
         initial={{ scale: 0.92, opacity: 0, y: 30 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.92, opacity: 0, y: 30 }}
@@ -107,15 +107,23 @@ function CompetitionDetailModal({ competition, onClose, isTerminal }) {
         <button className={styles.modalClose} onClick={onClose}>✕</button>
 
         <div className={styles.modalHeader}>
-          <span className={styles.modalStatus}>{competition.status}</span>
-          <h2 className={styles.modalName}>{competition.name}</h2>
-          <p className={styles.modalTagline}>{competition.tagline}</p>
+          <span className={styles.modalStatus}>
+            {competition.status}
+          </span>
+          <h2 className={styles.modalName}>
+            {competition.name}
+          </h2>
+          <p className={styles.modalTagline}>
+            {competition.tagline}
+          </p>
         </div>
 
         <div className={styles.modalMeta}>
           <div className={styles.modalMetaItem}>
             <span className={styles.modalMetaLabel}>Dates</span>
-            <span className={styles.modalMetaVal}>{competition.dates}</span>
+            <span className={styles.modalMetaVal}>
+              {competition.dates}
+            </span>
           </div>
           {competition.duration && (
             <div className={styles.modalMetaItem}>
@@ -147,11 +155,17 @@ function CompetitionDetailModal({ competition, onClose, isTerminal }) {
                 >
                   <div className={styles.eventItemHeader}>
                     <span className={styles.eventNum}>{String(i + 1).padStart(2, "0")}</span>
-                    <span className={styles.eventType}>{event.type}</span>
+                    <span className={styles.eventType}>
+                      {event.type}
+                    </span>
                   </div>
-                  <h4 className={styles.eventName}>{event.name}</h4>
+                  <h4 className={styles.eventName}>
+                    {event.name}
+                  </h4>
                   <p className={styles.eventDesc}>{event.desc}</p>
-                  <span className={styles.eventTeam}>Team Size: {event.teamSize}</span>
+                  <span className={styles.eventTeam}>
+                    Team Size: {event.teamSize}
+                  </span>
                 </motion.div>
               ))}
             </div>
@@ -163,28 +177,28 @@ function CompetitionDetailModal({ competition, onClose, isTerminal }) {
             <h3 className={styles.eventListTitle}>What to Expect</h3>
             <div className={styles.hackathonDetails}>
               <div className={styles.hackathonItem}>
-                <span className={styles.hackathonIcon}>⏱</span>
+                <span className={styles.hackathonIcon}>[ T ]</span>
                 <div>
                   <strong>24 Hours Non-Stop</strong>
                   <p>Code, build, and ship in a single sprint</p>
                 </div>
               </div>
               <div className={styles.hackathonItem}>
-                <span className={styles.hackathonIcon}>🏆</span>
+                <span className={styles.hackathonIcon}>[ G ]</span>
                 <div>
                   <strong>National Level</strong>
                   <p>Open to participants from all colleges across India</p>
                 </div>
               </div>
               <div className={styles.hackathonItem}>
-                <span className={styles.hackathonIcon}>🧠</span>
+                <span className={styles.hackathonIcon}>[ B ]</span>
                 <div>
                   <strong>Real Problems</strong>
                   <p>Solve challenges that matter with mentorship from industry</p>
                 </div>
               </div>
               <div className={styles.hackathonItem}>
-                <span className={styles.hackathonIcon}>👥</span>
+                <span className={styles.hackathonIcon}>[ P ]</span>
                 <div>
                   <strong>Team Size: 2–4</strong>
                   <p>Collaborate, ideate, and execute as a team</p>
@@ -199,11 +213,10 @@ function CompetitionDetailModal({ competition, onClose, isTerminal }) {
 }
 
 export default function Challenges() {
-  const { isTerminalMode } = useTerminalMode();
   const [selectedCompetition, setSelectedCompetition] = useState(null);
 
   return (
-    <section className={`${styles.challenges} ${isTerminalMode ? styles.terminal : ""}`} id="challenges">
+    <section className={styles.challenges} id="challenges">
       <motion.div
         className={styles.header}
         initial={{ opacity: 0, y: 20 }}
@@ -211,11 +224,13 @@ export default function Challenges() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className={`${styles.title} ${isTerminalMode ? 'glow' : ''}`}>
-          {isTerminalMode ? "COMPETITIONS_WE_CONDUCT" : "COMPETITIONS WE CONDUCT"}
+        <h2 className={styles.title}>
+          <EncryptedText 
+            text="COMPETITIONS WE CONDUCT" 
+          />
         </h2>
-        <span className={isTerminalMode ? styles.command : styles.subLabel}>
-          {isTerminalMode ? "grep -r 'EVENT' /competitions" : "// events we're running"}
+        <span className={styles.subLabel}>
+          {"// events we're running"}
         </span>
       </motion.div>
 
@@ -223,7 +238,7 @@ export default function Challenges() {
         {competitions.map((card, cardIndex) => (
           <motion.button
             key={card.id}
-            className={`${styles.card} ${isTerminalMode ? styles.terminalCard : ""}`}
+            className={styles.card}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -234,39 +249,43 @@ export default function Challenges() {
             <div className={styles.topBar}></div>
             <div className={styles.cardInner}>
               <div className={styles.status}>
-                {!isTerminalMode && <span className={card.status === "Registrations Open" ? styles.dotLive : styles.dotUpcoming}></span>}
-                {isTerminalMode ? `STATUS_${card.status.replace(/\s+/g, '_').toUpperCase()}` : card.status}
+                <span className={card.status === "Registrations Open" ? styles.dotLive : styles.dotUpcoming}></span>
+                {card.status}
               </div>
-              <h3 className={styles.name}>{isTerminalMode ? card.name.toUpperCase() : card.name}</h3>
-              <p className={styles.tagline}>{card.tagline}</p>
+              <h3 className={styles.name}>
+                {card.name}
+              </h3>
+              <p className={styles.tagline}>
+                {card.tagline}
+              </p>
               <p className={styles.desc}>{card.desc}</p>
               <div className={styles.tags}>
                 {card.tags.map((tag) => (
-                  <span key={tag} className={styles.tag}>{isTerminalMode ? tag.toUpperCase() : tag}</span>
+                  <span key={tag} className={styles.tag}>{tag}</span>
                 ))}
               </div>
 
               <div className={styles.meta}>
                 <div className={styles.metaRow}>
-                  <span>{isTerminalMode ? "DATE" : "Date"}</span>
+                  <span>Date</span>
                   <span className={styles.metaVal}>{card.dates}</span>
                 </div>
                 {card.eventCount && (
                   <div className={styles.metaRow}>
-                    <span>{isTerminalMode ? "EVENTS" : "Events"}</span>
+                    <span>Events</span>
                     <span className={styles.metaVal}>{card.eventCount}</span>
                   </div>
                 )}
                 {card.duration && (
                   <div className={styles.metaRow}>
-                    <span>{isTerminalMode ? "DURATION" : "Duration"}</span>
+                    <span>Duration</span>
                     <span className={styles.metaVal}>{card.duration}</span>
                   </div>
                 )}
               </div>
 
               <div className={styles.viewDetails}>
-                <span>{isTerminalMode ? "[ VIEW_DETAILS ]" : "[ View Details → ]"}</span>
+                <span>[ View Details → ]</span>
               </div>
             </div>
           </motion.button>
@@ -279,7 +298,6 @@ export default function Challenges() {
           <CompetitionDetailModal
             competition={selectedCompetition}
             onClose={() => setSelectedCompetition(null)}
-            isTerminal={isTerminalMode}
           />
         )}
       </AnimatePresence>

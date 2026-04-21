@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
+    "firebase": "^12.11.0",
     "framer-motion": "^12.38.0",
+    "fuse.js": "^7.3.0",
     "next": "14.2.35",
     "react": "^18",
     "react-dom": "^18",
-    "resend": "^6.9.4"
+    "resend": "^6.9.4",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "eslint": "^8",

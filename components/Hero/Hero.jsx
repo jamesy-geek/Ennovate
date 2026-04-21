@@ -4,18 +4,18 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import styles from "./Hero.module.css";
-import { useTerminalMode } from "@/hooks/useTerminalMode";
 import useTypewriter from "@/hooks/useTypewriter";
 import MagneticButton from "@/components/MagneticButton/MagneticButton";
+import { FlipWords } from "@/components/TextEffects/TextEffects";
 
 const stats = [
-  { label: "Years Active", target: 3, suffix: "+" },
-  { label: "Members", target: 20, suffix: "+" },
-  { label: "Projects Shipped", target: 10, suffix: "+" },
+  { label: "Years Active", target: 3, suffix: "" },
+  { label: "Members", target: 23, suffix: "+" },
+  { label: "Projects Shipped", target: 14, suffix: "+" },
   { label: "Ideas Left", target: null, value: "∞" },
 ];
 
-function CountUp({ target, suffix, isTerminal }) {
+function CountUp({ target, suffix }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
@@ -39,23 +39,18 @@ function CountUp({ target, suffix, isTerminal }) {
   }, [isInView, target]);
 
   return (
-    <span ref={ref} className={`${styles.statNum} ${isTerminal ? 'glow' : ''}`}>
-      {target ? `${count}${suffix}` : (isTerminal ? "INF" : "∞")}
+    <span ref={ref} className={styles.statNum}>
+      {target ? `${count}${suffix}` : "∞"}
     </span>
   );
 }
 
 export default function Hero() {
-  const { isTerminalMode } = useTerminalMode();
   const [text, setText] = useState("");
   const scrollRef = useRef(null);
   const [showScrollHint, setShowScrollHint] = useState(true);
-  const fullText = isTerminalMode ? "CLUB_ENNOVATE // EST_2022" : "Club Ennovate · Est. 2022";
+  const fullText = "Club Ennovate · Est. 2022";
 
-  const subText = "Robots, code, and real-world problems. Three years of building things that actually matter.";
-  const { displayText: typedSub } = useTypewriter(subText, { enabled: isTerminalMode, speed: 20 });
-
-  // Typewriter effect (Original)
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -66,7 +61,6 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [fullText]);
 
-  // Hide scroll hint after user scrolls
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -80,64 +74,54 @@ export default function Hero() {
   return (
     <div className={styles.heroScroller} ref={scrollRef}>
       {/* Panel 1 — Hero Content */}
-      <section className={`${styles.hero} ${styles.panel} ${isTerminalMode ? styles.terminal : ""}`}>
+      <section className={`${styles.hero} ${styles.panel}`}>
         {/* Ghost Watermark */}
-        <div className={styles.ghost}>{isTerminalMode ? "0x03" : "03"}</div>
+        <div className={styles.ghost}>03</div>
 
         {/* Hero Content */}
         <div className={styles.content}>
-          <p className={styles.eyebrow}>{text}<span className={styles.cursor}>{isTerminalMode ? "_" : "|"}</span></p>
+          <p className={styles.eyebrow}>{text}<span className={styles.cursor}>|</span></p>
 
-          <h1 className={`${styles.title} ${isTerminalMode ? 'glitch glow' : ''}`}>
-            {isTerminalMode ? (
-              <div className={styles.line}>WE_BUILD_REAL</div>
-            ) : (
-              <>
-                <div className={styles.line}>
-                  <motion.span
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    WE.
-                  </motion.span>
-                </div>
-                <div className={styles.line}>
-                  <motion.span
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    BUILD.
-                  </motion.span>
-                </div>
-                <div className={styles.line}>
-                  <motion.span
-                    className={styles.outline}
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    REAL.
-                  </motion.span>
-                </div>
-              </>
-            )}
+          <h1 className={styles.title}>
+            <div className={styles.line}>
+              <motion.span
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                WE.
+              </motion.span>
+            </div>
+            <div className={styles.line}>
+              <motion.span
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              >
+                BUILD.
+              </motion.span>
+            </div>
+            <div className={styles.line}>
+              <motion.span
+                className={styles.outline}
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                REAL.
+              </motion.span>
+            </div>
           </h1>
 
-          <motion.p
+          <motion.div
             className={styles.sub}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
           >
-            {isTerminalMode ? typedSub : (
-              <>
-                Robots, code, and real-world problems.<br />
-                Three years of building things that actually matter.
-              </>
-            )}
-          </motion.p>
+            Three years of shipping things that actually matter —<br />
+            robots, embedded systems, and software built at PESCE Mandya.
+          </motion.div>
 
           <motion.div
             className={styles.ctas}
@@ -146,12 +130,12 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 1.3 }}
           >
             <Link href="#about" className={`${styles.btn} ${styles.btnOutline}`}>
-              {isTerminalMode ? "[ WHAT_WE_DO ]" : "[ What We Do ]"}
+              [ What We Do ]
             </Link>
             <Link href="/join">
               <MagneticButton>
                 <span className={`${styles.btn} ${styles.btnFilled}`}>
-                  {isTerminalMode ? "[ JOIN_THE_CLUB ]" : "[ Join the Club ]"}
+                  [ Join the Club ]
                 </span>
               </MagneticButton>
             </Link>
@@ -165,7 +149,7 @@ export default function Hero() {
           animate={{ opacity: showScrollHint ? 1 : 0 }}
           transition={{ duration: 0.6, delay: 1.6 }}
         >
-          <span>{isTerminalMode ? "→ SCROLL_FOR_NUMBERS" : "→ Scroll for numbers"}</span>
+          <span>→ Scroll for numbers</span>
           <div className={styles.scrollRightLine} />
         </motion.div>
 
@@ -177,21 +161,21 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 1.6 }}
         >
           <div className={styles.scrollLine}></div>
-          <span>{isTerminalMode ? "↓ SCROLL_INIT" : "↓ Scroll"}</span>
+          <span>↓ Scroll</span>
         </motion.div>
       </section>
 
       {/* Panel 2 — Stats Numbers */}
-      <section className={`${styles.statsPanel} ${styles.panel} ${isTerminalMode ? styles.terminal : ""}`}>
+      <section className={`${styles.statsPanel} ${styles.panel}`}>
         <div className={styles.statsContent}>
           <motion.h2
-            className={`${styles.statsTitle} ${isTerminalMode ? 'glow' : ''}`}
+            className={styles.statsTitle}
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            {isTerminalMode ? "BY_THE_NUMBERS" : "BY THE NUMBERS"}
+            BY THE NUMBERS
           </motion.h2>
           <div className={styles.statsGrid}>
             {stats.map((stat, i) => (
@@ -203,15 +187,15 @@ export default function Hero() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.12 }}
               >
-                <CountUp target={stat.target} suffix={stat.suffix || ""} isTerminal={isTerminalMode} />
+                <CountUp target={stat.target} suffix={stat.suffix || ""} />
                 <span className={styles.statLabel}>
-                  {isTerminalMode ? stat.label.replace(/\s+/g, '_').toUpperCase() : stat.label}
+                  {stat.label}
                 </span>
               </motion.div>
             ))}
           </div>
           <div className={styles.statsBackHint}>
-            <span>{isTerminalMode ? "← BACK_TO_HERO" : "← Back to hero"}</span>
+            <span>← Back to hero</span>
           </div>
         </div>
       </section>

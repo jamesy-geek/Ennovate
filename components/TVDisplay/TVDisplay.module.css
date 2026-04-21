@@ -1,0 +1,44 @@
+.tvContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tvBase {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.screenInner {
+  position: absolute;
+  /* Approximate screen area inside the Empty TV frame */
+  width: 61%;
+  height: 60%;
+  top: 18%;
+  left: 17%;
+  border-radius: 8% / 12%; 
+  background-color: #f5f5f5; /* Constant off-white screen background */
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Optional: faint scanlines or inner shadow to simulate screen depth */
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+}
+
+.logoImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 15px; /* keep logos away from curved edges */
+  filter: contrast(1.1) drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
+}

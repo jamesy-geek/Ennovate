@@ -2,73 +2,97 @@
   {
     "id": "proj-001",
     "title": "TechTatva Bot",
+    "terminalTitle": "TECHTATVA_BOT_V1",
     "description": "High-performance competition robot for TechTatva 2026. Autonomous navigation with computer vision.",
     "tags": ["Robotics", "OpenCV", "ROS"],
+    "terminalTags": ["ROBOTICS", "OPENCV", "ROS_NOETIC"],
     "image": "/assets/projects/robotics.png",
     "status": "In Progress",
+    "terminalStatus": "BUILD_IN_PROGRESS",
     "year": "2026"
   },
   {
     "id": "proj-002",
     "title": "Club ERP System",
+    "terminalTitle": "ERP_SYS_DEPLOYED",
     "description": "Full-stack equipment management portal with student auth, admin dashboard, and real-time inventory tracking.",
     "tags": ["Web App", "Firebase", "Node.js"],
+    "terminalTags": ["WEB_APP", "FIREBASE_RTDB", "NODE_JS"],
     "image": "/assets/projects/webapp.png",
     "status": "Shipped",
+    "terminalStatus": "SHIP_SUCCESS",
     "year": "2025"
   },
   {
     "id": "proj-003",
     "title": "Smart Campus IoT",
+    "terminalTitle": "IOT_CAMPUS_NODE",
     "description": "Network of IoT sensors monitoring classroom occupancy, air quality, and energy consumption across campus.",
     "tags": ["IoT", "Arduino", "MQTT"],
+    "terminalTags": ["IOT_STACK", "ARDUINO_CORE", "MQTT_PUB"],
     "image": "/assets/projects/iot.png",
     "status": "Shipped",
+    "terminalStatus": "SHIP_SUCCESS",
     "year": "2025"
   },
   {
     "id": "proj-004",
     "title": "Recon Drone v2",
+    "terminalTitle": "RECON_DRONE_V2",
     "description": "Custom-built quadcopter with FPV camera, GPS waypoints, and automated obstacle avoidance system.",
     "tags": ["Drone", "PX4", "3D Print"],
+    "terminalTags": ["UAV_PX4", "GPS_MAVLINK", "3D_FAB"],
     "image": "/assets/projects/drone.png",
     "status": "In Progress",
+    "terminalStatus": "FLIGHT_TESTING",
     "year": "2026"
   },
   {
     "id": "proj-005",
     "title": "Heritage AI Guide",
+    "terminalTitle": "HERITAGE_AI_ASST",
     "description": "AI-powered heritage tourism assistant for Mandya. Multi-language voice guide with object recognition.",
     "tags": ["AI", "TensorFlow", "NLP"],
+    "terminalTags": ["AI_MODELS", "TENSORFLOW_LITE", "NLP_GEN"],
     "image": "/assets/projects/ai.png",
     "status": "Shipped",
+    "terminalStatus": "SHIP_SUCCESS",
     "year": "2024"
   },
   {
     "id": "proj-006",
     "title": "Roboarm MK-III",
+    "terminalTitle": "ROBOARM_6DOF",
     "description": "6-DOF robotic arm with inverse kinematics, capable of pick-and-place operations with sub-mm precision.",
     "tags": ["Robotics", "Servo", "IK"],
+    "terminalTags": ["ROBOTICS", "PWM_SERVO", "IK_ENGINE"],
     "image": "/assets/projects/robotics.png",
     "status": "Shipped",
+    "terminalStatus": "SHIP_SUCCESS",
     "year": "2024"
   },
   {
     "id": "proj-007",
     "title": "Ennovate Website",
+    "terminalTitle": "WEB_FRONTEND_V3",
     "description": "The website you're looking at right now. Built with Next.js, Framer Motion, and way too many late nights.",
     "tags": ["Web", "Next.js", "Design"],
+    "terminalTags": ["NEXT_JS_14", "FRAMER_MOTION", "DESIGN_BRUTAL"],
     "image": "/assets/projects/webapp.png",
     "status": "Shipped",
+    "terminalStatus": "SHIP_SUCCESS",
     "year": "2025"
   },
   {
     "id": "proj-008",
     "title": "AgriSense",
+    "terminalTitle": "AGRISENSE_IOT",
     "description": "Soil moisture and weather monitoring station for local farmers. Solar powered with SMS alerts.",
     "tags": ["IoT", "Solar", "Community"],
+    "terminalTags": ["IOT_STACK", "SOLAR_PWR", "COMM_IMPACT"],
     "image": "/assets/projects/iot.png",
     "status": "Shipped",
+    "terminalStatus": "SHIP_SUCCESS",
     "year": "2023"
   }
 ]

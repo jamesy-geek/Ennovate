@@ -4,52 +4,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./EasterEgg.module.css";
 
-function MatrixRain({ onClose }) {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const chars = "01";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = [];
-    for (let i = 0; i < columns; i++) drops[i] = 1;
-
-    let animationId;
-    const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#00ff00";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-      animationId = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => cancelAnimationFrame(animationId);
-  }, []);
-
-  return (
-    <div className={styles.matrixOverlay} onClick={onClose}>
-      <canvas ref={canvasRef} className={styles.matrixCanvas} />
-    </div>
-  );
-}
 
 export default function EasterEggManager() {
   const [activeEgg, setActiveEgg] = useState(null);
@@ -57,9 +11,6 @@ export default function EasterEggManager() {
 
   const triggerEgg = useCallback((eggId) => {
     setActiveEgg(eggId);
-    if (eggId === "MATRIX" || eggId === "TERMINAL") {
-      setTimeout(() => setActiveEgg(null), 8000);
-    }
   }, []);
 
   // Listen for keyboard triggers
@@ -67,9 +18,8 @@ export default function EasterEggManager() {
     const handleKeyDown = (e) => {
       const newSeq = (inputSequence + e.key.toLowerCase()).slice(-20);
       setInputSequence(newSeq);
-
-      if (newSeq.endsWith("ennovate")) triggerEgg("TERMINAL");
-      if (newSeq.endsWith("matrix")) triggerEgg("MATRIX");
+      
+      // Removed terminal/matrix keyboard triggers
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -86,24 +36,6 @@ export default function EasterEggManager() {
   return (
     <>
       <AnimatePresence>
-        {activeEgg === "TERMINAL" && (
-          <motion.div 
-            className={styles.terminalOverlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveEgg(null)}
-          >
-            <div className={styles.terminalContent}>
-              <p>{" > "} ACCESSING ENNOVATE_RESOURCES...</p>
-              <p>{" > "} [OK] CONNECTION_SECURED</p>
-              <p>{" > "} [OK] SYSTEM_BOOT_V3.4.0</p>
-              <br />
-              <p className={styles.green}>WELCOME. YOU FOUND US.</p>
-              <p className={styles.cursor}>_</p>
-            </div>
-          </motion.div>
-        )}
 
 
         {activeEgg === "BLUEPRINT" && (
@@ -176,15 +108,6 @@ export default function EasterEggManager() {
           </motion.div>
         )}
 
-        {activeEgg === "MATRIX" && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <MatrixRain onClose={() => setActiveEgg(null)} />
-          </motion.div>
-        )}
       </AnimatePresence>
 
       {/* Persistent global effects */}

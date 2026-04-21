@@ -1,9 +1,8 @@
 import CassetteHeader from "@/components/CassetteHeader/CassetteHeader";
 import Hero from "@/components/Hero/Hero";
 import Pillars from "@/components/Pillars/Pillars";
-import Projects from "@/components/Projects/Projects";
+import RoadWork from "@/components/RoadWork/RoadWork";
 import Challenges from "@/components/Challenges/Challenges";
-import Achievements from "@/components/Achievements/Achievements";
 import Manifesto from "@/components/Manifesto/Manifesto";
 import CTA from "@/components/CTA/CTA";
 import ComingSoon from "@/components/ComingSoon/ComingSoon";
@@ -18,44 +17,34 @@ export default function Home() {
       <CassetteHeader />
       <Hero />
 
-      <SectionDivider number="02" label="What We Do" />
+      <SectionDivider number="02" label="what we do" />
 
       {/* 02 — ABOUT */}
       <Pillars />
 
-      <SectionDivider number="03" label="Our Builds" />
+      <SectionDivider number="03" label="what we built" />
 
-      {/* 03 — PROJECTS */}
-      <Projects />
+      {/* 03 — ROAD WORK (Folders for Projects & Achievements) */}
+      <RoadWork />
 
-      <SectionDivider number="04" label="Our Events" />
+      <SectionDivider number="04" label="events" />
 
       {/* 04 — COMPETITIONS */}
       <Challenges />
 
-      <SectionDivider number="05" label="Milestones" />
+      <SectionDivider number="05" label="manifesto" />
 
-      {/* 05 — ACHIEVEMENTS */}
-      <Achievements />
-
-      <SectionDivider number="06" label="Philosophy" />
-
-      {/* 06 — MANIFESTO */}
+      {/* 05 — MANIFESTO */}
       <Manifesto />
 
-      <SectionDivider number="07" label="Join" />
+      <SectionDivider number="06" label="join" />
 
-      {/* 07 — JOIN CTA */}
+      {/* 06 — JOIN CTA */}
       <CTA />
 
-      <SectionDivider number="08" label="Lab" />
+      <SectionDivider number="07" label="the eye" />
 
-      {/* 08 — DRONE (Coming Soon) */}
-      <ComingSoon />
-
-      <SectionDivider number="09" label="Observation" />
-
-      {/* 09 — EYE */}
+      {/* 07 — EYE */}
       <EyeSection />
 
       {/* FOOTER */}

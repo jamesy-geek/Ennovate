@@ -1,16 +1,19 @@
-import { Bebas_Neue, Barlow, Barlow_Condensed, JetBrains_Mono, Share_Tech_Mono } from "next/font/google";
+import { Bebas_Neue, Barlow, Barlow_Condensed, JetBrains_Mono, Archivo } from "next/font/google";
 import "./globals.css";
-import "./terminal-mode.css";
 import Nav from "@/components/Nav/Nav";
 import Cursor from "@/components/Cursor/Cursor";
 import EasterEggManager from "@/components/EasterEgg/EasterEgg";
-import { TerminalModeProvider } from "@/hooks/useTerminalMode";
-import MatrixRainBG from "@/components/MatrixRainBG/MatrixRainBG";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas-neue",
+});
+
+const archivo = Archivo({
+  weight: "800",
+  subsets: ["latin"],
+  variable: "--font-archivo",
 });
 
 const barlow = Barlow({
@@ -31,12 +34,6 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
-const shareTechMono = Share_Tech_Mono({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-share-tech-mono",
-});
-
 export const metadata = {
   title: "ENNOVATE — We Build.",
   description: "Robots, code, and real-world problems. Club Ennovate established 2022.",
@@ -46,19 +43,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="cursor-none">
       <body
-        className={`${bebasNeue.variable} ${barlow.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} ${shareTechMono.variable}`}
+        className={`${bebasNeue.variable} ${archivo.variable} ${barlow.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable}`}
         style={{
           fontFamily: "var(--font-barlow), sans-serif",
         }}
       >
-        <TerminalModeProvider>
-          <div className="scanlines" />
-          <MatrixRainBG />
-          <Cursor />
-          <Nav />
-          <EasterEggManager />
-          {children}
-        </TerminalModeProvider>
+        <Cursor />
+        <Nav />
+        <EasterEggManager />
+        {children}
       </body>
     </html>
   );

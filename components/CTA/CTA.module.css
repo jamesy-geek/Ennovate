@@ -13,24 +13,6 @@
   overflow: hidden;
 }
 
-.particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.particle {
-  position: absolute;
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 10px;
-  text-transform: uppercase;
-  color: var(--text-color);
-  opacity: 0.15;
-  letter-spacing: 2px;
-  white-space: nowrap;
-}
-
 .content {
   position: relative;
   z-index: 2;
@@ -119,8 +101,4 @@
 .ctaSection.terminal-mode .btn:hover {
   background: rgba(0, 255, 65, 0.1);
   box-shadow: 0 0 20px var(--g);
-}
-
-.ctaSection.terminal-mode .particle {
-  color: var(--dg);
 }
